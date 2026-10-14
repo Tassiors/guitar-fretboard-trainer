@@ -44,7 +44,7 @@
     header {
       background-color: var(--card-bg);
       border-bottom: 1px solid var(--card-border);
-      padding: 12px 24px;
+      padding: 10px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -59,14 +59,14 @@
     }
 
     .brand h1 {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 800;
       color: var(--accent);
       letter-spacing: -0.02em;
     }
 
     .brand span {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
     }
 
@@ -74,6 +74,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .segmented-btn {
@@ -88,9 +89,9 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 6px 12px;
+      padding: 5px 12px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -104,13 +105,32 @@
     /* MAIN CONTAINER */
     main {
       flex: 1;
-      padding: 16px 24px;
+      padding: 14px 24px;
       max-width: 1400px;
       margin: 0 auto;
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
+    }
+
+    /* PERSPECTIVE INFO BANNER */
+    .info-banner {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid #334155;
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info-banner strong {
+      color: var(--accent);
     }
 
     /* HERO CHALLENGE CARD */
@@ -118,22 +138,22 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 14px 20px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 14px;
     }
 
     .hero-left {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     .prompt-title {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -147,14 +167,14 @@
     }
 
     .target-note {
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 800;
       color: var(--accent);
       line-height: 1;
     }
 
     .target-subnote {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: var(--text-muted);
       font-weight: 500;
     }
@@ -163,11 +183,11 @@
       background: #0f172a;
       border: 1px solid var(--card-border);
       color: var(--amber);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 3px 10px;
       border-radius: 6px;
-      margin-left: 10px;
+      margin-left: 8px;
     }
 
     .progress-badge.completed {
@@ -176,20 +196,20 @@
     }
 
     .instruction-text {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: #cbd5e1;
     }
 
     .hero-middle {
       background: #0f172a;
       border-radius: 10px;
-      padding: 8px 16px;
+      padding: 6px 14px;
       text-align: center;
-      min-width: 140px;
+      min-width: 130px;
     }
 
     .timer-title {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 700;
       color: #64748b;
       text-transform: uppercase;
@@ -197,14 +217,14 @@
 
     .timer-val {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.45rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: #fbbf24;
       line-height: 1.2;
     }
 
     .streak-val {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: #f97316;
     }
@@ -219,9 +239,9 @@
       background: #334155;
       color: #fff;
       border: none;
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -281,12 +301,12 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 8px 12px;
       text-align: center;
     }
 
     .stat-title {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 700;
       color: #64748b;
       text-transform: uppercase;
@@ -294,7 +314,7 @@
     }
 
     .stat-val {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 800;
       line-height: 1.2;
       margin-top: 2px;
@@ -327,7 +347,7 @@
     }
 
     .group-label {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: #f1f5f9;
       margin-right: 4px;
@@ -395,7 +415,7 @@
 
     @media (max-width: 768px) {
       header { padding: 10px 14px; }
-      main { padding: 10px 12px; }
+      main { padding: 8px 12px; }
       .hero-card { flex-direction: column; align-items: stretch; }
       .hero-middle { min-width: auto; }
       .control-row { flex-direction: column; align-items: stretch; }
@@ -408,9 +428,16 @@
   <header>
     <div class="brand">
       <h1>🎸 GUITAR FRETBOARD TRAINER</h1>
-      <span>| Escala Real (E A D G B E • Até 12ª Casa)</span>
+      <span id="brandSub">| Perspectiva Real de Quem Toca (E A D G B E)</span>
     </div>
     <div class="top-controls">
+      <!-- ORIENTATION TOGGLE (DESTRO / CANHOTO) -->
+      <div class="segmented-btn">
+        <button id="btnDestro" class="active" onclick="setOrientation('destro')">🎸 Destro (Padrão)</button>
+        <button id="btnCanhoto" onclick="setOrientation('canhoto')">🎸 Canhoto</button>
+      </div>
+
+      <!-- NOTATION TOGGLE -->
       <div class="segmented-btn">
         <button id="btnCifra" class="active" onclick="setNotation('cifra')">Cifra (C, D, E)</button>
         <button id="btnSolfejo" onclick="setNotation('solfejo')">Solfejo (Dó, Ré)</button>
@@ -420,6 +447,14 @@
 
   <!-- MAIN BODY -->
   <main>
+    <!-- PERSPECTIVE INFORMATIVE BANNER -->
+    <div class="info-banner">
+      <span>ℹ️</span>
+      <div>
+        <strong>Perspectiva do Instrumentista:</strong> A posição das notas equivale exatamente à posição real em que tocamos (visão do instrumento em mãos). A imagem é uma representação da visão traseira do braço da guitarra, adaptada com transparência para tornar a escala e as cordas perfeitamente visíveis sob a perspectiva de quem está tocando.
+      </div>
+    </div>
+
     <!-- HERO CHALLENGE CARD -->
     <div class="hero-card">
       <div class="hero-left">
@@ -505,9 +540,10 @@
             <input type="checkbox" id="chkOpenStrings" checked onchange="toggleOpenStrings(this.checked)">
             Nut / Cordas Soltas (0)
           </label>
+          <!-- ACCIDENTALS CHECKED BY DEFAULT AS REQUESTED -->
           <label class="toggle-label">
-            <input type="checkbox" id="chkNaturals" checked onchange="toggleNaturals(this.checked)">
-            Apenas Notas Naturais
+            <input type="checkbox" id="chkAccidentals" checked onchange="toggleAccidentals(this.checked)">
+            Incluir Acidentes (# / Sustenidos)
           </label>
           <label class="toggle-label">
             <input type="checkbox" id="chkZoom" onchange="toggleZoom(this.checked)">
@@ -527,6 +563,7 @@
 
   <script>
     // --- MUSIC THEORY & GUITAR PHYSICS ---
+    // Standard Guitar Tuning: Top = 6ª E, Bottom = 1ª E
     const OPEN_STRING_MIDI = { 6: 40, 5: 45, 4: 50, 3: 55, 2: 59, 1: 64 };
     const STRING_NAMES = {
       6: "6ª Corda (E - Bordão)", 5: "5ª Corda (A)", 4: "4ª Corda (D)",
@@ -562,10 +599,11 @@
     }
 
     // --- APPLICATION STATE ---
+    let handOrientation = 'destro'; // 'destro' (default) or 'canhoto'
     let startFret = 1;
     let endFret = 5;
     let includeOpenStrings = true;
-    let naturalOnly = true;
+    let includeAccidentals = true; // DEFAULT: Naturais e Acidentes (#) habilitados!
     let notation = 'cifra';
     let zoomMode = false;
     let showIntervalNotes = false;
@@ -598,9 +636,6 @@
     neckImage.src = 'assets/guitar_neck_white_bg.jpg';
     neckImage.onload = () => { redraw(); };
 
-    // --- SOUND ENGINE (EMPTY FOR SOUND-FREE TRAINING) ---
-    // User requested sound-free experience for maximum focus and speed.
-
     // --- MUSIC LOGIC ---
     function getNoteInfo(s, f) {
       const midi = OPEN_STRING_MIDI[s] + f;
@@ -622,7 +657,7 @@
       for (let s = 1; s <= 6; s++) {
         for (const f of fretList) {
           const info = getNoteInfo(s, f);
-          if (!naturalOnly || info.isNatural) {
+          if (includeAccidentals || info.isNatural) {
             available.add(info.semi);
           }
         }
@@ -694,9 +729,10 @@
       let regDesc = `Casas ${startFret} à ${endFret}`;
       if (includeOpenStrings) regDesc += " + Nut (Soltas)";
 
+      const orientTxt = (handOrientation === 'canhoto') ? " [Orientação Canhoto]" : "";
       const instr = totalNeeded > 1
-        ? `Existem ${totalNeeded} ocorrências de ${mainTxt} em ${regDesc}. Clique em todas para avançar!`
-        : `Existe 1 ocorrência de ${mainTxt} em ${regDesc}. Clique nela para avançar!`;
+        ? `Existem ${totalNeeded} ocorrências de ${mainTxt} em ${regDesc}${orientTxt}. Clique em todas para avançar!`
+        : `Existe 1 ocorrência de ${mainTxt} em ${regDesc}${orientTxt}. Clique nela para avançar!`;
       document.getElementById('instructionText').innerText = instr;
     }
 
@@ -707,7 +743,7 @@
       redraw();
     }
 
-    // --- CANVAS RENDERING (TRANSPARENCY WASH, COMPACT BADGES, NO BLUE LINES) ---
+    // --- CANVAS RENDERING (DESTRO & CANHOTO / LEFT-HANDED COMPATIBLE) ---
     function redraw() {
       const W = canvas.width;
       const H = canvas.height;
@@ -719,6 +755,7 @@
       if (!neckImage.complete || neckImage.naturalWidth === 0) return;
 
       hitboxes = {};
+      const isCanhoto = (handOrientation === 'canhoto');
 
       // Zoom range calculation
       let fMin = startFret;
@@ -749,17 +786,32 @@
       const padX = Math.max(10, Math.floor((W - targetW) / 2));
       const padY = Math.max(10, Math.floor((H - targetH) / 2));
 
-      // Draw guitar neck
-      ctx.drawImage(
-        neckImage,
-        CROP_BOX.x1 + subX1, CROP_BOX.y1, curCropW, CROP_H,
-        padX, padY, targetW, targetH
-      );
+      // Draw guitar neck: if Canhoto, mirror horizontally!
+      if (isCanhoto) {
+        ctx.save();
+        ctx.translate(W, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(
+          neckImage,
+          CROP_BOX.x1 + subX1, CROP_BOX.y1, curCropW, CROP_H,
+          padX, padY, targetW, targetH
+        );
+        ctx.restore();
+      } else {
+        ctx.drawImage(
+          neckImage,
+          CROP_BOX.x1 + subX1, CROP_BOX.y1, curCropW, CROP_H,
+          padX, padY, targetW, targetH
+        );
+      }
 
+      // Coordinate converter considering Left/Right-handed orientation
       function rawToCanvas(rawX, rawY) {
+        const directX = padX + Math.floor((rawX - curOffsetX) * scale);
+        const directY = padY + Math.floor((rawY - CROP_BOX.y1) * scale);
         return {
-          x: padX + Math.floor((rawX - curOffsetX) * scale),
-          y: padY + Math.floor((rawY - CROP_BOX.y1) * scale)
+          x: isCanhoto ? (W - directX) : directX,
+          y: directY
         };
       }
 
@@ -779,7 +831,11 @@
 
         const p1 = rawToCanvas(rx1, NECK_Y_BOUNDS[0]);
         const p2 = rawToCanvas(rx2, NECK_Y_BOUNDS[1]);
-        const cmidX = Math.floor((p1.x + p2.x) / 2);
+
+        // In canhoto, p2.x is to the left of p1.x because coordinates are mirrored
+        const boxX1 = Math.min(p1.x, p2.x);
+        const boxX2 = Math.max(p1.x, p2.x);
+        const cmidX = Math.floor((boxX1 + boxX2) / 2);
 
         // Fret number label (dark contrast, no blue lines)
         if (f > 0) {
@@ -797,8 +853,8 @@
           const py = rawToCanvas(midRawX, syRaw).y;
           const zoneH = Math.max(16, Math.floor(12 * scale));
           hitboxes[`${s},${f}`] = {
-            x1: p1.x, y1: py - zoneH / 2,
-            x2: p2.x, y2: py + zoneH / 2,
+            x1: boxX1, y1: py - zoneH / 2,
+            x2: boxX2, y2: py + zoneH / 2,
             cx: cmidX, cy: py,
             s: s, f: f
           };
@@ -820,15 +876,16 @@
         ctx.fillText("Soltas", nutMidX, nutP1.y - 10);
       }
 
-      // Tuning labels on Headstock
-      ctx.textAlign = "right";
+      // Tuning labels: Near the Nut (Left for Destro, Right for Canhoto)
+      ctx.textAlign = isCanhoto ? "left" : "right";
       ctx.textBaseline = "middle";
       ctx.font = "bold 11px Inter, sans-serif";
       ctx.fillStyle = "#0f172a";
       for (let s = 1; s <= 6; s++) {
         const hb = hitboxes[`${s},0`];
         if (hb) {
-          ctx.fillText(TUNING_LABELS[s], hb.x1 - 8, hb.cy);
+          const tx = isCanhoto ? (hb.x2 + 8) : (hb.x1 - 8);
+          ctx.fillText(TUNING_LABELS[s], tx, hb.cy);
         }
       }
 
@@ -838,31 +895,33 @@
         const yBotC = rawToCanvas(NUT_RAW_X.start, NECK_Y_BOUNDS[1]).y;
         const neckH = yBotC - yTopC;
 
-        ctx.fillStyle = "rgba(255, 255, 255, 0.68)"; // Soft natural transparency
+        ctx.fillStyle = "rgba(255, 255, 255, 0.68)";
 
         // 1. Unselected Nut
         if (!includeOpenStrings && startFret > 0) {
           const nx1 = rawToCanvas(NUT_RAW_X.start, NECK_Y_BOUNDS[0]).x;
           const nx2 = rawToCanvas(NUT_RAW_X.end, NECK_Y_BOUNDS[0]).x;
-          ctx.fillRect(nx1, yTopC, nx2 - nx1, neckH);
+          const rxMin = Math.min(nx1, nx2);
+          const rxMax = Math.max(nx1, nx2);
+          ctx.fillRect(rxMin, yTopC, rxMax - rxMin, neckH);
         }
 
-        // 2. Unselected frets to the left of startFret
+        // 2. Unselected frets between Nut and startFret
         if (startFret > 1) {
           const xNutEnd = rawToCanvas(RAW_FRETS[0], NECK_Y_BOUNDS[0]).x;
           const xStartFret = rawToCanvas(RAW_FRETS[startFret - 1], NECK_Y_BOUNDS[0]).x;
-          if (xStartFret > xNutEnd) {
-            ctx.fillRect(xNutEnd, yTopC, xStartFret - xNutEnd, neckH);
-          }
+          const rxMin = Math.min(xNutEnd, xStartFret);
+          const rxMax = Math.max(xNutEnd, xStartFret);
+          ctx.fillRect(rxMin, yTopC, rxMax - rxMin, neckH);
         }
 
-        // 3. Unselected frets to the right of endFret
+        // 3. Unselected frets after endFret up to 12th fret
         if (endFret < 12) {
           const xEndFret = rawToCanvas(RAW_FRETS[endFret], NECK_Y_BOUNDS[0]).x;
           const xF12 = rawToCanvas(RAW_FRETS[12], NECK_Y_BOUNDS[0]).x;
-          if (xF12 > xEndFret) {
-            ctx.fillRect(xEndFret, yTopC, xF12 - xEndFret, neckH);
-          }
+          const rxMin = Math.min(xEndFret, xF12);
+          const rxMax = Math.max(xEndFret, xF12);
+          ctx.fillRect(rxMin, yTopC, rxMax - rxMin, neckH);
         }
       }
 
@@ -878,15 +937,14 @@
         for (let s = 1; s <= 6; s++) {
           for (const f of fretList) {
             const key = `${s},${f}`;
-            if (foundPositions.has(key)) continue; // Found notes have radiant emerald below
+            if (foundPositions.has(key)) continue;
             const hb = hitboxes[key];
             if (!hb) continue;
 
             const info = getNoteInfo(s, f);
-            if (!naturalOnly || info.isNatural) {
+            if (includeAccidentals || info.isNatural) {
               const lbl = notation === 'solfejo' ? info.solfejo : info.cifra;
 
-              // Study badge
               ctx.fillStyle = "rgba(30, 41, 59, 0.92)";
               ctx.strokeStyle = "#475569";
               ctx.lineWidth = 1;
@@ -933,12 +991,11 @@
         }
       }
 
-      // === COMPACT IDENTIFIED NOTES (LUMINOUS GLOW & SPECULAR JEWEL) ===
+      // === COMPACT IDENTIFIED NOTES (LUMINOUS GLOW & JEWEL) ===
       for (const posKey of foundPositions) {
         const hb = hitboxes[posKey];
         if (!hb) continue;
 
-        // Aura glow layers
         ctx.strokeStyle = "rgba(52, 211, 153, 0.25)";
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -951,7 +1008,6 @@
         ctx.arc(hb.cx, hb.cy, badgeRad + 3, 0, Math.PI * 2);
         ctx.stroke();
 
-        // Jewel badge body
         ctx.fillStyle = "#059669";
         ctx.strokeStyle = "#10b981";
         ctx.lineWidth = 2;
@@ -960,14 +1016,12 @@
         ctx.fill();
         ctx.stroke();
 
-        // 3D Specular shine arc
         ctx.strokeStyle = "rgba(209, 250, 229, 0.85)";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(hb.cx, hb.cy, badgeRad - 2, Math.PI, Math.PI * 2);
         ctx.stroke();
 
-        // Note Label
         const info = getNoteInfo(hb.s, hb.f);
         const lbl = notation === 'solfejo' ? info.solfejo : info.cifra;
         ctx.fillStyle = "#ffffff";
@@ -1055,7 +1109,6 @@
         lastClickCorrect = true;
         lastClickedLabel = clickedLabel;
 
-        // Trigger Ripple Animation
         ripplePos = posKey;
         rippleProgress = 0.1;
         animateRipple();
@@ -1097,7 +1150,7 @@
 
         const msg = isTarget
           ? `⚠️ Essa é a nota ${targetLabel}, mas está fora da região ativa! (${fretName})`
-          : `❌ Ops! Você clicou em ${clickedLabel} (${stringName}, ${fretName}). Continue procurando ${targetLabel}!`;
+          : `❌ Ops! Você clicou em ${clickedLabel} (${stringName}, {fretName}). Continue procurando ${targetLabel}!`;
 
         document.getElementById('promptTitle').innerText = msg;
         document.getElementById('promptTitle').style.color = "var(--coral)";
@@ -1135,6 +1188,18 @@
     }
 
     // --- CONTROLS CALLBACKS ---
+    function setOrientation(mode) {
+      handOrientation = mode;
+      document.getElementById('btnDestro').classList.toggle('active', mode === 'destro');
+      document.getElementById('btnCanhoto').classList.toggle('active', mode === 'canhoto');
+      const subTxt = mode === 'canhoto'
+        ? "| Perspectiva Real de Quem Toca (Canhoto • E A D G B E)"
+        : "| Perspectiva Real de Quem Toca (Destro • E A D G B E)";
+      document.getElementById('brandSub').innerText = subTxt;
+      updateChallengeUI();
+      redraw();
+    }
+
     function setRegion(sf, ef, btn) {
       startFret = sf;
       endFret = ef;
@@ -1178,8 +1243,8 @@
       nextChallenge();
     }
 
-    function toggleNaturals(checked) {
-      naturalOnly = checked;
+    function toggleAccidentals(checked) {
+      includeAccidentals = checked;
       nextChallenge();
     }
 
@@ -1239,7 +1304,6 @@
       document.getElementById('promptTitle').style.color = "var(--accent)";
     }
 
-    // Timer tick loop
     setInterval(() => {
       if (challengeStartTime > 0 && foundPositions.size < validPositions.size) {
         const cur = (performance.now() - challengeStartTime) / 1000.0;
@@ -1247,7 +1311,6 @@
       }
     }, 100);
 
-    // Initial setup
     nextChallenge();
   </script>
 </body>

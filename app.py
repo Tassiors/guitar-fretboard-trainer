@@ -1,8 +1,8 @@
 """
 app.py - Standalone Guitar Fretboard Trainer (Treinador de Braço de Guitarra)
-Updated with interval note study toggle ("Exibir Notas do Intervalo"),
-natural transparency wash on unselected regions (zero blue lines),
-compact badges with luminous glow, white background, and Nut mapping.
+Supports Destro (default) & Canhoto (left-handed) orientations,
+accidentals (#) enabled by default, perspective explanation banner,
+interval study toggle, white background, Nut mapping, and compact badges.
 """
 
 import os
@@ -23,8 +23,8 @@ class GuitarTrainerApp(ctk.CTk):
         super().__init__()
 
         self.title("Guitar Fretboard Trainer • Treinador de Notas na Guitarra (Até 12ª Casa)")
-        self.geometry("1280x860")
-        self.minsize(1050, 720)
+        self.geometry("1280x890")
+        self.minsize(1050, 740)
 
         # Base directories
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -34,14 +34,15 @@ class GuitarTrainerApp(ctk.CTk):
         self.renderer = FretboardRenderer(self.assets_dir)
 
         # App Configuration
+        self.hand_orientation = "destro"  # "destro" (default) or "canhoto"
         self.max_fret = 12
         self.start_fret = 1
         self.end_fret = 5
         self.include_open_strings = True
-        self.natural_only = True
+        self.include_accidentals = True   # DEFAULT: Acidentes (#) e Naturais habilitados!
         self.notation = "cifra"
         self.zoom_mode = False
-        self.show_interval_notes = False  # Toggle for viewing all notes in active interval
+        self.show_interval_notes = False
 
         # Challenge State
         self.current_challenge = None
@@ -103,17 +104,29 @@ class GuitarTrainerApp(ctk.CTk):
         )
         title_lbl.pack(side="left")
 
-        sub_lbl = ctk.CTkLabel(
+        self.sub_title_lbl = ctk.CTkLabel(
             title_box,
-            text="  |  Escala Real • E A D G B E (Nut e Casas 1 a 12)",
+            text="  |  Perspectiva Real de Quem Toca (Destro • E A D G B E)",
             font=ctk.CTkFont(family="Segoe UI", size=13),
             text_color="#94a3b8"
         )
-        sub_lbl.pack(side="left")
+        self.sub_title_lbl.pack(side="left")
 
         top_controls = ctk.CTkFrame(header_frame, fg_color="transparent")
         top_controls.pack(side="right", padx=20, pady=8)
 
+        # Orientation Toggle (Destro / Canhoto)
+        self.orientation_btn = ctk.CTkSegmentedButton(
+            top_controls,
+            values=["🎸 Destro (Padrão)", "🎸 Canhoto"],
+            command=self._on_orientation_change,
+            font=ctk.CTkFont(family="Segoe UI", size=12, weight="bold"),
+            selected_color="#0284c7"
+        )
+        self.orientation_btn.set("🎸 Destro (Padrão)")
+        self.orientation_btn.pack(side="left", padx=8)
+
+        # Notation Toggle
         self.notation_btn = ctk.CTkSegmentedButton(
             top_controls,
             values=["Cifra (C, D, E)", "Solfejo (Dó, Ré)"],
@@ -124,12 +137,29 @@ class GuitarTrainerApp(ctk.CTk):
         self.notation_btn.set("Cifra (C, D, E)")
         self.notation_btn.pack(side="left", padx=8)
 
-        # 2. CHALLENGE HERO CARD
+        # 2. PERSPECTIVE INFORMATIVE BANNER
+        banner_frame = ctk.CTkFrame(self, fg_color="#1e293b", corner_radius=8, border_width=1, border_color="#334155")
+        banner_frame.pack(side="top", fill="x", padx=20, pady=(8, 4))
+
+        banner_text = (
+            "ℹ️ Perspectiva do Instrumentista: A posição das notas equivale exatamente à posição real em que tocamos (visão do instrumento em mãos). "
+            "A imagem é uma representação da visão traseira do braço da guitarra, adaptada com transparência para tornar a escala e as cordas visíveis através do braço."
+        )
+        ctk.CTkLabel(
+            banner_frame,
+            text=banner_text,
+            font=ctk.CTkFont(family="Segoe UI", size=11),
+            text_color="#cbd5e1",
+            wraplength=1200,
+            justify="left"
+        ).pack(side="left", padx=12, pady=6)
+
+        # 3. CHALLENGE HERO CARD
         self.hero_frame = ctk.CTkFrame(self, fg_color="#1e293b", corner_radius=12, border_width=1, border_color="#334155")
-        self.hero_frame.pack(side="top", fill="x", padx=20, pady=(10, 6))
+        self.hero_frame.pack(side="top", fill="x", padx=20, pady=(6, 4))
 
         hero_left = ctk.CTkFrame(self.hero_frame, fg_color="transparent")
-        hero_left.pack(side="left", fill="both", expand=True, padx=22, pady=10)
+        hero_left.pack(side="left", fill="both", expand=True, padx=22, pady=8)
 
         self.prompt_label = ctk.CTkLabel(
             hero_left,
@@ -145,7 +175,7 @@ class GuitarTrainerApp(ctk.CTk):
         self.target_note_display = ctk.CTkLabel(
             target_container,
             text="C",
-            font=ctk.CTkFont(family="Segoe UI", size=36, weight="bold"),
+            font=ctk.CTkFont(family="Segoe UI", size=34, weight="bold"),
             text_color="#38bdf8"
         )
         self.target_note_display.pack(side="left")
@@ -161,12 +191,12 @@ class GuitarTrainerApp(ctk.CTk):
         self.progress_badge = ctk.CTkLabel(
             target_container,
             text="🎯 0 de 2 encontradas",
-            font=ctk.CTkFont(family="Segoe UI", size=14, weight="bold"),
+            font=ctk.CTkFont(family="Segoe UI", size=13, weight="bold"),
             text_color="#f59e0b",
             fg_color="#0f172a",
             corner_radius=8,
             padx=12,
-            pady=4
+            pady=3
         )
         self.progress_badge.pack(side="left", padx=16)
 
@@ -233,7 +263,7 @@ class GuitarTrainerApp(ctk.CTk):
         )
         self.skip_btn.pack(pady=3)
 
-        # 3. INTERACTIVE FRETBOARD CANVAS (CLEAN WHITE CONTAINER, NO BLUE LINES)
+        # 4. INTERACTIVE FRETBOARD CANVAS (WHITE BACKGROUND)
         canvas_wrapper = ctk.CTkFrame(self, fg_color="#ffffff", corner_radius=12, border_width=1, border_color="#cbd5e1")
         canvas_wrapper.pack(side="top", fill="both", expand=True, padx=20, pady=6)
 
@@ -245,7 +275,7 @@ class GuitarTrainerApp(ctk.CTk):
         )
         self.canvas.pack(fill="both", expand=True, padx=4, pady=4)
 
-        # 4. STATS METRICS BAR
+        # 5. STATS METRICS BAR
         stats_frame = ctk.CTkFrame(self, fg_color="transparent")
         stats_frame.pack(side="top", fill="x", padx=20, pady=(4, 6))
         stats_frame.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
@@ -256,7 +286,7 @@ class GuitarTrainerApp(ctk.CTk):
         self.card_acc = self._create_stat_card(stats_frame, 3, "🎯 PRECISÃO", "100%", "#a855f7")
         self.card_best_streak = self._create_stat_card(stats_frame, 4, "🏆 RECORDE", "0", "#f59e0b")
 
-        # 5. REGION SELECTION & CONTROL DRAWER
+        # 6. REGION SELECTION & CONTROL DRAWER
         controls_frame = ctk.CTkFrame(self, fg_color="#1e293b", corner_radius=12, border_width=1, border_color="#334155")
         controls_frame.pack(side="bottom", fill="x", padx=20, pady=(0, 10))
 
@@ -337,14 +367,15 @@ class GuitarTrainerApp(ctk.CTk):
         self.open_strings_switch.select()
         self.open_strings_switch.pack(side="left", padx=8)
 
-        # Natural notes only
+        # Accidentals switch (DEFAULT: CHECKED)
         self.accidental_switch = ctk.CTkSwitch(
             row2,
-            text="Apenas Notas Naturais",
+            text="Incluir Acidentes (#)",
             command=self._on_accidental_toggle,
-            font=ctk.CTkFont(family="Segoe UI", size=12)
+            font=ctk.CTkFont(family="Segoe UI", size=12, weight="bold"),
+            progress_color="#0284c7"
         )
-        self.accidental_switch.select()
+        self.accidental_switch.select()  # Checked by default!
         self.accidental_switch.pack(side="left", padx=10)
 
         # Zoom in on region
@@ -356,7 +387,7 @@ class GuitarTrainerApp(ctk.CTk):
         )
         self.zoom_switch.pack(side="left", padx=10)
 
-        # NEW BUTTON: Exibir Todas as Notas do Intervalo
+        # Exibir Todas as Notas do Intervalo
         self.interval_notes_btn = ctk.CTkButton(
             row2,
             text="👁️ Exibir Notas do Intervalo",
@@ -402,6 +433,13 @@ class GuitarTrainerApp(ctk.CTk):
         val_label.pack(pady=(0, 5))
         return val_label
 
+    def _on_orientation_change(self, val):
+        self.hand_orientation = "canhoto" if "Canhoto" in val else "destro"
+        orient_txt = "Canhoto" if self.hand_orientation == "canhoto" else "Destro"
+        self.sub_title_lbl.configure(text=f"  |  Perspectiva Real de Quem Toca ({orient_txt} • E A D G B E)")
+        self._update_challenge_display()
+        self._redraw_fretboard()
+
     def _set_region(self, sf: int, ef: int):
         self.start_fret = sf
         self.end_fret = ef
@@ -434,7 +472,7 @@ class GuitarTrainerApp(ctk.CTk):
         self._next_challenge()
 
     def _on_accidental_toggle(self):
-        self.natural_only = (self.accidental_switch.get() == 1)
+        self.include_accidentals = (self.accidental_switch.get() == 1)
         self._next_challenge()
 
     def _on_zoom_toggle(self):
@@ -447,7 +485,6 @@ class GuitarTrainerApp(ctk.CTk):
         self._redraw_fretboard()
 
     def _toggle_interval_notes(self):
-        """Toggles display of all notes across the selected interval for study."""
         self.show_interval_notes = not self.show_interval_notes
         if self.show_interval_notes:
             self.interval_notes_btn.configure(
@@ -486,13 +523,14 @@ class GuitarTrainerApp(ctk.CTk):
         if self.include_open_strings:
             reg_str += " + Nut (Soltas)"
 
+        orient_desc = " [Canhoto]" if self.hand_orientation == "canhoto" else ""
         if total_needed > 1:
             self.instruction_subtext.configure(
-                text=f"Existem {total_needed} ocorrências de {main_text} em {reg_str}. Clique em todas para avançar!"
+                text=f"Existem {total_needed} ocorrências de {main_text} em {reg_str}{orient_desc}. Clique em todas para avançar!"
             )
         else:
             self.instruction_subtext.configure(
-                text=f"Existe 1 ocorrência de {main_text} em {reg_str}. Clique nela para avançar!"
+                text=f"Existe 1 ocorrência de {main_text} em {reg_str}{orient_desc}. Clique nela para avançar!"
             )
 
     def _next_challenge(self):
@@ -510,7 +548,7 @@ class GuitarTrainerApp(ctk.CTk):
         self.current_challenge = FretboardTheory.generate_challenge(
             self.start_fret,
             self.end_fret,
-            self.natural_only,
+            natural_only=(not self.include_accidentals),
             include_open_strings=self.include_open_strings,
             previous_semitone=prev_semi
         )
@@ -554,7 +592,6 @@ class GuitarTrainerApp(ctk.CTk):
         if self.target_revealed and self.current_challenge:
             targets = self.valid_positions
 
-        # Calculate interval notes info if study mode is enabled
         interval_notes_info = None
         if self.show_interval_notes:
             interval_notes_info = {}
@@ -565,7 +602,7 @@ class GuitarTrainerApp(ctk.CTk):
             for s in range(1, 7):
                 for f in fret_list:
                     info = FretboardTheory.get_note_info(s, f)
-                    if not self.natural_only or info["is_natural"]:
+                    if self.include_accidentals or info["is_natural"]:
                         lbl = info["solfejo_sharp"] if self.notation == "solfejo" else info["cifra_sharp"]
                         interval_notes_info[(s, f)] = lbl
 
@@ -580,6 +617,7 @@ class GuitarTrainerApp(ctk.CTk):
             end_fret=self.end_fret,
             include_open_strings=self.include_open_strings,
             zoom_mode=self.zoom_mode,
+            hand_orientation=self.hand_orientation,
             hover_pos=self.hover_pos,
             target_positions=targets,
             found_positions=self.found_positions,
