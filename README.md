@@ -1,65 +1,67 @@
 # 🎸 Guitar Fretboard Trainer (Treinador de Braço de Guitarra)
 
-Um aplicativo moderno e interativo em Python para treino acelerado de memorização e localização de notas no braço da guitarra, com **orientação para destros**, divisões físicas reais das casas, textura realista de jacarandá/rosewood, cordas com calibre proporcional e síntese de áudio imediata.
+Treinador interativo de memorização e localização ágil de notas no braço da guitarra para **músicos destros**, baseado na escala real de uma guitarra até a 12ª casa (dois pontos), com afinação padrão (E A D G B E), mapeamento do Nut (cordas soltas), foco por transparência suave e suporte a notas repetidas no intervalo.
+
+Disponível em **duas versões**:
+1. 🌐 **Versão Web (Navegador)** via GitHub Pages (sem precisar instalar nada!).
+2. 💻 **Versão Desktop Standalone** (Python com interface gráfica).
 
 ---
 
-## 🌟 Principais Funcionalidades
+## 🌐 Acesso Online pelo Navegador (GitHub Pages)
 
-1. **Orientação para Destros**:
-   - Nut/Pestana à esquerda, casas progredindo para a direita.
-   - Alternância em um clique entre **Visão Tablatura** (1ª corda no topo) e **Visão Músico** (6ª corda no topo).
+Você pode acessar o aplicativo diretamente de qualquer computador, tablet ou celular:
+👉 **[https://tassiors.github.io/guitar-fretboard-trainer/](https://tassiors.github.io/guitar-fretboard-trainer/)**
 
-2. **Braço Realista com Física Precisa**:
-   - Divisões exatas das casas baseadas na **regra dos 18 ($2^{1/12}$)**.
-   - Trastes metálicos em níquel-prata com relevo e brilho 3D.
-   - Marcações em madrepérola (inlays) nas casas 3, 5, 7, 9, 12 (duplo), 15, 17, 19, 21 e 24.
-   - Cordas bordão com textura enrolada (wound) e primas em aço liso, com calibres físicos graduais.
+---
 
-3. **Treino por Região Customizável**:
-   - Presets imediatos:
-     - **1ª à 5ª casa** (Posição aberta / primeiros passos)
-     - **5ª à 9ª casa** (Região média)
-     - **7ª à 12ª casa** (Oitava)
-     - **9ª à 15ª casa** (Solos e escalas agudas)
-     - **0 à 12 (Metade do braço)**
-     - **Braço Completo (0 a 22 casas)**
-   - Sliders deslizantes para definir qualquer intervalo inicial e final que desejar.
-   - Opção de **Zoom na Região** para ampliar a área de treino na tela inteira.
+## 🌟 Funcionalidades
 
-4. **Métricas de Desempenho em Tempo Real**:
-   - ⏱️ **Tempo Médio de Acerto** (em segundos)
+1. **Imagem e Escala Real**:
+   - Braço com o fundo branco original, recortado do headstock até a **12ª casa** (marcação de dois pontos).
+   - Cordas na ordem real (de cima para baixo):
+     - **6ª corda: E (Bordão mais grosso)**
+     - **5ª corda: A**
+     - **4ª corda: D**
+     - **3ª corda: G**
+     - **2ª corda: B**
+     - **1ª corda: E (Prima mais fina)**
+
+2. **Mapeamento Completo do Nut (Cordas Soltas / Casa 0)**:
+   - Ampla área de clique para cada corda solta no Nut.
+   - Opção para incluir ou ignorar as cordas soltas no treino.
+
+3. **Treino de Todas as Ocorrências Repetidas**:
+   - Quando uma nota é solicitada (ex.: **Lá / A** nas casas 1 a 5), o aplicativo contabiliza todas as suas posições no intervalo selecionado (`🎯 0 de 3 encontradas`).
+   - Cada posição acertada brilha com uma **aura verde esmeralda e onda de expansão (ripple)** e permanece fixada.
+   - O app só avança para a próxima nota quando você encontrar **todas as ocorrências** daquele intervalo!
+
+4. **Foco por Transparência (Sem Linhas Azuis)**:
+   - As casas e regiões fora do intervalo de prática recebem um efeito de transparência esmaecida.
+   - A região ativa permanece com 100% de nitidez e contraste, direcionando o foco visual naturalmente.
+
+5. **Botão "👁️ Exibir Notas do Intervalo"**:
+   - Permite visualizar instantaneamente todas as notas musicais do intervalo ativo para estudo e memorização visual.
+
+6. **Métricas de Desempenho**:
+   - ⏱️ **Tempo Médio de Resposta** (em segundos)
    - ⏱️ **Cronômetro ao vivo** da nota atual
    - ✅ **Total de Acertos**
    - ❌ **Total de Erros**
-   - 🎯 **Taxa de Precisão** (%)
-   - 🔥 **Sequência Atual de Acertos (Streak)** e Recorde (Best Streak)
-   - 🔄 Botão para zerar métricas a qualquer momento.
-
-5. **Modos e Recursos Extras**:
-   - **Áudio Realista Instantâneo**: Sintetizador em memória que reproduz o timbre de corda dedilhada com harmônicos físicos reais.
-   - **Notação Dupla**: Escolha entre **Cifra** (C, D, E, F, G, A, B) ou **Solfejo** (Dó, Ré, Mi, Fá, Sol, Lá, Si).
-   - **Filtro de Acidentes**: Treine apenas com notas naturais ou inclua sustenidos (#) e bemóis (b).
-   - **Botão Dica / Revelar**: Mostra com anéis dourados onde estão as ocorrências da nota solicitada.
-   - **Modo Explorador Livre**: Clique livremente em qualquer corda/casa para ouvir e identificar a nota.
+   - 🎯 **Taxa de Precisão (%)**
+   - 🔥 **Sequência Atual de Acertos (Streak)** e Recorde
 
 ---
 
-## 🚀 Como Executar
+## 💻 Como Rodar a Versão Desktop (Python)
 
-### Opção 1: Pelo executável em lote (Windows)
-Basta dar dois cliques no arquivo:
+### Pelo inicializador em lote (Windows):
+Dê dois cliques em:
 ```cmd
 run.bat
 ```
 
-### Opção 2: Pelo Terminal / Prompt de Comando
+### Pelo Terminal:
 ```powershell
 python app.py
 ```
-
-### Dependências
-O aplicativo utiliza apenas bibliotecas leves já instaladas:
-- `customtkinter`
-- `pillow`
-- `winsound` (nativo do Windows)

@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guitar Fretboard Trainer • Treinador de Notas na Guitarra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --emerald: #10b981;
+      --coral: #ef4444;
+      --amber: #f59e0b;
+      --purple: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* TOP HEADER */
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+
+    .brand span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .segmented-btn {
+      display: flex;
+      background: #0f172a;
+      border-radius: 8px;
+      padding: 3px;
+      border: 1px solid var(--card-border);
+    }
+
+    .segmented-btn button {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .segmented-btn button.active {
+      background: var(--accent-hover);
+      color: #fff;
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      flex: 1;
+      padding: 16px 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* HERO CHALLENGE CARD */
+    .hero-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .prompt-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .target-box {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .target-note {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .target-subnote {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .progress-badge {
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      color: var(--amber);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-left: 10px;
+    }
+
+    .progress-badge.completed {
+      color: var(--emerald);
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .instruction-text {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+    }
+
+    .hero-middle {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 8px 16px;
+      text-align: center;
+      min-width: 140px;
+    }
+
+    .timer-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+
+    .timer-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #fbbf24;
+      line-height: 1.2;
+    }
+
+    .streak-val {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #f97316;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .btn {
+      background: #334155;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      background: #475569;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #475569;
+    }
+
+    .btn-outline:hover {
+      background: #334155;
+    }
+
+    .btn-active {
+      background: var(--accent-hover);
+    }
+
+    /* CANVAS CONTAINER (WHITE BACKGROUND, CLEAN BORDER) */
+    .canvas-container {
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      padding: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    canvas {
+      width: 100%;
+      height: auto;
+      max-height: 320px;
+      display: block;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    /* STATS METRICS ROW */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      text-align: center;
+    }
+
+    .stat-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-val {
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+
+    /* CONTROLS DRAWER */
+    .controls-drawer {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .presets-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .group-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-right: 4px;
+    }
+
+    .preset-btn {
+      background: #334155;
+      border: none;
+      color: #e2e8f0;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .preset-btn:hover, .preset-btn.active {
+      background: var(--accent-hover);
+      color: #fff;
+    }
+
+    .sliders-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slider-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .slider-item input[type="range"] {
+      width: 90px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .toggles-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .toggle-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      cursor: pointer;
+    }
+
+    .toggle-label input {
+      accent-color: var(--accent);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 10px 14px; }
+      main { padding: 10px 12px; }
+      .hero-card { flex-direction: column; align-items: stretch; }
+      .hero-middle { min-width: auto; }
+      .control-row { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header>
+    <div class="brand">
+      <h1>🎸 GUITAR FRETBOARD TRAINER</h1>
+      <span>| Escala Real (E A D G B E • Até 12ª Casa)</span>
+    </div>
+    <div class="top-controls">
+      <div class="segmented-btn">
+        <button id="btnCifra" class="active" onclick="setNotation('cifra')">Cifra (C, D, E)</button>
+        <button id="btnSolfejo" onclick="setNotation('solfejo')">Solfejo (Dó, Ré)</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN BODY -->
+  <main>
+    <!-- HERO CHALLENGE CARD -->
+    <div class="hero-card">
+      <div class="hero-left">
+        <div class="prompt-title" id="promptTitle">ENCONTRE TODAS AS OCORRÊNCIAS DA NOTA:</div>
+        <div class="target-box">
+          <div class="target-note" id="targetNote">C</div>
+          <div class="target-subnote" id="targetSubnote">(Dó)</div>
+          <div class="progress-badge" id="progressBadge">🎯 0 de 2 encontradas</div>
+        </div>
+        <div class="instruction-text" id="instructionText">
+          Clique nas cordas (inclusive no Nut / cordas soltas) que possuem esta nota no intervalo!
+        </div>
+      </div>
+
+      <div class="hero-middle">
+        <div class="timer-title">TEMPO DA NOTA</div>
+        <div class="timer-val" id="timerVal">0.0s</div>
+        <div class="streak-val" id="streakVal">🔥 Sequência: 0</div>
+      </div>
+
+      <div class="hero-right">
+        <button class="btn" id="btnReveal" onclick="revealHints()">💡 Revelar Posições</button>
+        <button class="btn btn-outline" onclick="nextChallenge()">⏭️ Pular Nota</button>
+      </div>
+    </div>
+
+    <!-- CANVAS GUITAR (WHITE BACKGROUND) -->
+    <div class="canvas-container">
+      <canvas id="fretboardCanvas" width="1200" height="280"></canvas>
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-title">⏱️ TEMPO MÉDIO</div>
+        <div class="stat-val" id="statAvgTime" style="color: var(--accent);">-- s</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">✅ ACERTOS</div>
+        <div class="stat-val" id="statHits" style="color: var(--emerald);">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">❌ ERROS</div>
+        <div class="stat-val" id="statErrors" style="color: var(--coral);">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">🎯 PRECISÃO</div>
+        <div class="stat-val" id="statAcc" style="color: var(--purple);">100%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">🏆 RECORDE</div>
+        <div class="stat-val" id="statBestStreak" style="color: var(--amber);">0</div>
+      </div>
+    </div>
+
+    <!-- CONTROLS DRAWER -->
+    <div class="controls-drawer">
+      <div class="control-row">
+        <div class="presets-group">
+          <span class="group-label">📍 Região das Casas:</span>
+          <button class="preset-btn active" onclick="setRegion(1, 5, this)">1ª à 5ª</button>
+          <button class="preset-btn" onclick="setRegion(5, 9, this)">5ª à 9ª</button>
+          <button class="preset-btn" onclick="setRegion(7, 12, this)">7ª à 12ª</button>
+          <button class="preset-btn" onclick="setRegion(1, 12, this)">1ª à 12ª</button>
+          <button class="preset-btn" onclick="setRegion(0, 12, this)">Braço Inteiro (0-12)</button>
+        </div>
+
+        <div class="sliders-box">
+          <div class="slider-item">
+            <span id="lblStartFret">De: 1</span>
+            <input type="range" id="sliderStart" min="0" max="11" value="1" oninput="onSliderStart(this.value)">
+          </div>
+          <div class="slider-item">
+            <span id="lblEndFret">Até: 5</span>
+            <input type="range" id="sliderEnd" min="1" max="12" value="5" oninput="onSliderEnd(this.value)">
+          </div>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="toggles-group">
+          <label class="toggle-label">
+            <input type="checkbox" id="chkOpenStrings" checked onchange="toggleOpenStrings(this.checked)">
+            Nut / Cordas Soltas (0)
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" id="chkNaturals" checked onchange="toggleNaturals(this.checked)">
+            Apenas Notas Naturais
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" id="chkZoom" onchange="toggleZoom(this.checked)">
+            Zoom na Região
+          </label>
+          <button class="btn btn-outline" id="btnIntervalNotes" onclick="toggleIntervalNotes()">
+            👁️ Exibir Notas do Intervalo
+          </button>
+        </div>
+
+        <button class="btn btn-outline" style="color: #fca5a5; border-color: #7f1d1d;" onclick="resetStats()">
+          🔄 Zerar Métricas
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // --- MUSIC THEORY & GUITAR PHYSICS ---
+    const OPEN_STRING_MIDI = { 6: 40, 5: 45, 4: 50, 3: 55, 2: 59, 1: 64 };
+    const STRING_NAMES = {
+      6: "6ª Corda (E - Bordão)", 5: "5ª Corda (A)", 4: "4ª Corda (D)",
+      3: "3ª Corda (G)", 2: "2ª Corda (B)", 1: "1ª Corda (E - Prima)"
+    };
+    const TUNING_LABELS = { 6: "6ª E", 5: "5ª A", 4: "4ª D", 3: "3ª G", 2: "2ª B", 1: "1ª E" };
+
+    const SHARP_CIFRA = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+    const SHARP_SOLF  = ["Dó", "Dó#", "Ré", "Ré#", "Mi", "Fá", "Fá#", "Sol", "Sol#", "Lá", "Lá#", "Si"];
+    const NATURALS = new Set([0, 2, 4, 5, 7, 9, 11]);
+
+    // Exact raw coordinates from white background image (1024x764, cropped 15..785)
+    const CROP_BOX = { x1: 15, y1: 285, x2: 785, y2: 465 };
+    const CROP_W = CROP_BOX.x2 - CROP_BOX.x1; // 770
+    const CROP_H = CROP_BOX.y2 - CROP_BOX.y1; // 180
+
+    const RAW_FRETS = {
+      0: 292, 1: 341, 2: 395, 3: 442, 4: 487, 5: 530,
+      6: 570, 7: 608, 8: 644, 9: 676, 10: 708, 11: 740, 12: 771
+    };
+    const NUT_RAW_X = { start: 220, end: 292 };
+
+    const STRING_Y = {
+      6: [353, 351], 5: [364, 363], 4: [375, 376],
+      3: [386, 388], 2: [398, 401], 1: [410, 414]
+    };
+    const NECK_Y_BOUNDS = [345, 420];
+
+    function getStringYRaw(s, x) {
+      const [y0, y1] = STRING_Y[s];
+      const t = (x - 289.0) / (771.0 - 289.0);
+      return y0 + t * (y1 - y0);
+    }
+
+    // --- APPLICATION STATE ---
+    let startFret = 1;
+    let endFret = 5;
+    let includeOpenStrings = true;
+    let naturalOnly = true;
+    let notation = 'cifra';
+    let zoomMode = false;
+    let showIntervalNotes = false;
+
+    let currentChallenge = null;
+    let validPositions = new Set();
+    let foundPositions = new Set();
+    let challengeStartTime = 0;
+    let targetRevealed = false;
+
+    let lastClickedPos = null;
+    let lastClickCorrect = null;
+    let lastClickedLabel = '';
+    let ripplePos = null;
+    let rippleProgress = 0;
+    let rippleAnimId = null;
+
+    let totalHits = 0;
+    let totalErrors = 0;
+    let reactionTimes = [];
+    let currentStreak = 0;
+    let bestStreak = 0;
+
+    let hitboxes = {};
+
+    // Load Guitar Neck Image
+    const canvas = document.getElementById('fretboardCanvas');
+    const ctx = canvas.getContext('2d');
+    const neckImage = new Image();
+    neckImage.src = 'assets/guitar_neck_white_bg.jpg';
+    neckImage.onload = () => { redraw(); };
+
+    // --- SOUND ENGINE (EMPTY FOR SOUND-FREE TRAINING) ---
+    // User requested sound-free experience for maximum focus and speed.
+
+    // --- MUSIC LOGIC ---
+    function getNoteInfo(s, f) {
+      const midi = OPEN_STRING_MIDI[s] + f;
+      const semi = midi % 12;
+      return {
+        string: s, fret: f, midi, semi,
+        isNatural: NATURALS.has(semi),
+        cifra: SHARP_CIFRA[semi],
+        solfejo: SHARP_SOLF[semi]
+      };
+    }
+
+    function generateChallenge() {
+      const fretList = [];
+      for (let f = startFret; f <= endFret; f++) fretList.push(f);
+      if (includeOpenStrings && !fretList.includes(0)) fretList.push(0);
+
+      const available = new Set();
+      for (let s = 1; s <= 6; s++) {
+        for (const f of fretList) {
+          const info = getNoteInfo(s, f);
+          if (!naturalOnly || info.isNatural) {
+            available.add(info.semi);
+          }
+        }
+      }
+
+      const arr = Array.from(available);
+      if (arr.length === 0) return null;
+
+      let choices = arr;
+      if (currentChallenge && arr.length > 1) {
+        choices = arr.filter(semi => semi !== currentChallenge.semi);
+      }
+      const targetSemi = choices[Math.floor(Math.random() * choices.length)];
+
+      const positions = [];
+      for (let s = 1; s <= 6; s++) {
+        for (const f of fretList) {
+          if (getNoteInfo(s, f).semi === targetSemi) {
+            positions.push(`${s},${f}`);
+          }
+        }
+      }
+
+      return {
+        semi: targetSemi,
+        cifra: SHARP_CIFRA[targetSemi],
+        solfejo: SHARP_SOLF[targetSemi],
+        positions: positions
+      };
+    }
+
+    function nextChallenge() {
+      currentChallenge = generateChallenge();
+      validPositions = new Set(currentChallenge.positions);
+      foundPositions = new Set();
+      challengeStartTime = performance.now();
+      targetRevealed = false;
+      lastClickedPos = null;
+      lastClickCorrect = null;
+      lastClickedLabel = '';
+      ripplePos = null;
+      rippleProgress = 0;
+
+      document.getElementById('promptTitle').innerText = "ENCONTRE TODAS AS OCORRÊNCIAS DA NOTA:";
+      document.getElementById('promptTitle').style.color = "var(--text-muted)";
+      updateChallengeUI();
+      redraw();
+    }
+
+    function updateChallengeUI() {
+      if (!currentChallenge) return;
+      const isSolf = notation === 'solfejo';
+      const mainTxt = isSolf ? currentChallenge.solfejo : currentChallenge.cifra;
+      const subTxt = isSolf ? `(${currentChallenge.cifra})` : `(${currentChallenge.solfejo})`;
+
+      document.getElementById('targetNote').innerText = mainTxt;
+      document.getElementById('targetSubnote').innerText = subTxt;
+
+      const totalNeeded = validPositions.size;
+      const foundCount = foundPositions.size;
+      const badge = document.getElementById('progressBadge');
+      badge.innerText = `🎯 ${foundCount} de ${totalNeeded} encontradas`;
+      if (foundCount === totalNeeded) {
+        badge.classList.add('completed');
+      } else {
+        badge.classList.remove('completed');
+      }
+
+      let regDesc = `Casas ${startFret} à ${endFret}`;
+      if (includeOpenStrings) regDesc += " + Nut (Soltas)";
+
+      const instr = totalNeeded > 1
+        ? `Existem ${totalNeeded} ocorrências de ${mainTxt} em ${regDesc}. Clique em todas para avançar!`
+        : `Existe 1 ocorrência de ${mainTxt} em ${regDesc}. Clique nela para avançar!`;
+      document.getElementById('instructionText').innerText = instr;
+    }
+
+    function revealHints() {
+      targetRevealed = true;
+      document.getElementById('promptTitle').innerText = "DICA: POSIÇÕES DESTACADAS NO BRAÇO:";
+      document.getElementById('promptTitle').style.color = "var(--amber)";
+      redraw();
+    }
+
+    // --- CANVAS RENDERING (TRANSPARENCY WASH, COMPACT BADGES, NO BLUE LINES) ---
+    function redraw() {
+      const W = canvas.width;
+      const H = canvas.height;
+
+      // Pure white canvas background
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, W, H);
+
+      if (!neckImage.complete || neckImage.naturalWidth === 0) return;
+
+      hitboxes = {};
+
+      // Zoom range calculation
+      let fMin = startFret;
+      let fMax = endFret;
+      let curCropW = CROP_W;
+      let curOffsetX = CROP_BOX.x1;
+      let subX1 = 0;
+      let subX2 = CROP_W;
+      let visibleFrets = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+      if (zoomMode && (startFret > 0 || endFret < 12)) {
+        const prevF = fMin > 0 ? fMin - 1 : 0;
+        const xLeftRaw = fMin === 0 ? NUT_RAW_X.start - 10 : RAW_FRETS[prevF] - 10;
+        const xRightRaw = RAW_FRETS[fMax] + 15;
+
+        subX1 = Math.max(0, xLeftRaw - CROP_BOX.x1);
+        subX2 = Math.min(CROP_W, xRightRaw - CROP_BOX.x1);
+        curCropW = subX2 - subX1;
+        curOffsetX = xLeftRaw;
+        visibleFrets = [];
+        for (let f = (fMin > 0 ? fMin - 1 : 0); f <= fMax; f++) visibleFrets.push(f);
+      }
+
+      const targetH = H * 0.74;
+      const scale = targetH / CROP_H;
+      const targetW = curCropW * scale;
+
+      const padX = Math.max(10, Math.floor((W - targetW) / 2));
+      const padY = Math.max(10, Math.floor((H - targetH) / 2));
+
+      // Draw guitar neck
+      ctx.drawImage(
+        neckImage,
+        CROP_BOX.x1 + subX1, CROP_BOX.y1, curCropW, CROP_H,
+        padX, padY, targetW, targetH
+      );
+
+      function rawToCanvas(rawX, rawY) {
+        return {
+          x: padX + Math.floor((rawX - curOffsetX) * scale),
+          y: padY + Math.floor((rawY - CROP_BOX.y1) * scale)
+        };
+      }
+
+      // Build Hitboxes
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+
+      for (const f of visibleFrets) {
+        let rx1, rx2;
+        if (f === 0) {
+          rx1 = NUT_RAW_X.start;
+          rx2 = NUT_RAW_X.end;
+        } else {
+          rx1 = RAW_FRETS[f - 1];
+          rx2 = RAW_FRETS[f];
+        }
+
+        const p1 = rawToCanvas(rx1, NECK_Y_BOUNDS[0]);
+        const p2 = rawToCanvas(rx2, NECK_Y_BOUNDS[1]);
+        const cmidX = Math.floor((p1.x + p2.x) / 2);
+
+        // Fret number label (dark contrast, no blue lines)
+        if (f > 0) {
+          const isActive = (f >= startFret && f <= endFret);
+          ctx.fillStyle = isActive ? "#0f172a" : "#94a3b8";
+          ctx.font = (isActive || [3, 5, 7, 9, 12].includes(f))
+            ? "bold 11px Inter, sans-serif"
+            : "500 10px Inter, sans-serif";
+          ctx.fillText(String(f), cmidX, p2.y + 12);
+        }
+
+        const midRawX = (rx1 + rx2) / 2.0;
+        for (let s = 1; s <= 6; s++) {
+          const syRaw = getStringYRaw(s, midRawX);
+          const py = rawToCanvas(midRawX, syRaw).y;
+          const zoneH = Math.max(16, Math.floor(12 * scale));
+          hitboxes[`${s},${f}`] = {
+            x1: p1.x, y1: py - zoneH / 2,
+            x2: p2.x, y2: py + zoneH / 2,
+            cx: cmidX, cy: py,
+            s: s, f: f
+          };
+        }
+      }
+
+      // Nut labels (clean typography)
+      if (visibleFrets.includes(0)) {
+        const nutP1 = rawToCanvas(NUT_RAW_X.start, NECK_Y_BOUNDS[0]);
+        const nutP2 = rawToCanvas(NUT_RAW_X.end, NECK_Y_BOUNDS[1]);
+        const nutMidX = Math.floor((nutP1.x + nutP2.x) / 2);
+        const nutActive = includeOpenStrings || startFret === 0;
+
+        ctx.fillStyle = nutActive ? "#0f172a" : "#94a3b8";
+        ctx.font = "bold 11px Inter, sans-serif";
+        ctx.fillText("NUT (0)", nutMidX, nutP2.y + 12);
+
+        ctx.textBaseline = "bottom";
+        ctx.fillText("Soltas", nutMidX, nutP1.y - 10);
+      }
+
+      // Tuning labels on Headstock
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      ctx.font = "bold 11px Inter, sans-serif";
+      ctx.fillStyle = "#0f172a";
+      for (let s = 1; s <= 6; s++) {
+        const hb = hitboxes[`${s},0`];
+        if (hb) {
+          ctx.fillText(TUNING_LABELS[s], hb.x1 - 8, hb.cy);
+        }
+      }
+
+      // === TRANSPARENCY WASH FOR UNSELECTED REGIONS ONLY (ZERO BLUE LINES) ===
+      if (!zoomMode) {
+        const yTopC = rawToCanvas(NUT_RAW_X.start, NECK_Y_BOUNDS[0]).y;
+        const yBotC = rawToCanvas(NUT_RAW_X.start, NECK_Y_BOUNDS[1]).y;
+        const neckH = yBotC - yTopC;
+
+        ctx.fillStyle = "rgba(255, 255, 255, 0.68)"; // Soft natural transparency
+
+        // 1. Unselected Nut
+        if (!includeOpenStrings && startFret > 0) {
+          const nx1 = rawToCanvas(NUT_RAW_X.start, NECK_Y_BOUNDS[0]).x;
+          const nx2 = rawToCanvas(NUT_RAW_X.end, NECK_Y_BOUNDS[0]).x;
+          ctx.fillRect(nx1, yTopC, nx2 - nx1, neckH);
+        }
+
+        // 2. Unselected frets to the left of startFret
+        if (startFret > 1) {
+          const xNutEnd = rawToCanvas(RAW_FRETS[0], NECK_Y_BOUNDS[0]).x;
+          const xStartFret = rawToCanvas(RAW_FRETS[startFret - 1], NECK_Y_BOUNDS[0]).x;
+          if (xStartFret > xNutEnd) {
+            ctx.fillRect(xNutEnd, yTopC, xStartFret - xNutEnd, neckH);
+          }
+        }
+
+        // 3. Unselected frets to the right of endFret
+        if (endFret < 12) {
+          const xEndFret = rawToCanvas(RAW_FRETS[endFret], NECK_Y_BOUNDS[0]).x;
+          const xF12 = rawToCanvas(RAW_FRETS[12], NECK_Y_BOUNDS[0]).x;
+          if (xF12 > xEndFret) {
+            ctx.fillRect(xEndFret, yTopC, xF12 - xEndFret, neckH);
+          }
+        }
+      }
+
+      // Compact Badge Radius
+      const badgeRad = Math.max(7, Math.floor(8.5 * scale));
+
+      // === STUDY MODE: SHOW ALL NOTES IN ACTIVE INTERVAL ===
+      if (showIntervalNotes) {
+        const fretList = [];
+        for (let f = startFret; f <= endFret; f++) fretList.push(f);
+        if (includeOpenStrings && !fretList.includes(0)) fretList.push(0);
+
+        for (let s = 1; s <= 6; s++) {
+          for (const f of fretList) {
+            const key = `${s},${f}`;
+            if (foundPositions.has(key)) continue; // Found notes have radiant emerald below
+            const hb = hitboxes[key];
+            if (!hb) continue;
+
+            const info = getNoteInfo(s, f);
+            if (!naturalOnly || info.isNatural) {
+              const lbl = notation === 'solfejo' ? info.solfejo : info.cifra;
+
+              // Study badge
+              ctx.fillStyle = "rgba(30, 41, 59, 0.92)";
+              ctx.strokeStyle = "#475569";
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.arc(hb.cx, hb.cy, badgeRad, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.stroke();
+
+              ctx.fillStyle = "#f8fafc";
+              ctx.font = "bold 9.5px Inter, sans-serif";
+              ctx.textAlign = "center";
+              ctx.textBaseline = "middle";
+              ctx.fillText(lbl, hb.cx, hb.cy);
+            }
+          }
+        }
+      }
+
+      // Target position hint stars
+      if (targetRevealed && currentChallenge) {
+        for (const posKey of validPositions) {
+          const hb = hitboxes[posKey];
+          if (!hb || foundPositions.has(posKey)) continue;
+
+          ctx.strokeStyle = "rgba(245, 158, 11, 0.5)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(hb.cx, hb.cy, badgeRad + 3, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.fillStyle = "#f59e0b";
+          ctx.strokeStyle = "#d97706";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(hb.cx, hb.cy, badgeRad, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "9px Inter, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("★", hb.cx, hb.cy);
+        }
+      }
+
+      // === COMPACT IDENTIFIED NOTES (LUMINOUS GLOW & SPECULAR JEWEL) ===
+      for (const posKey of foundPositions) {
+        const hb = hitboxes[posKey];
+        if (!hb) continue;
+
+        // Aura glow layers
+        ctx.strokeStyle = "rgba(52, 211, 153, 0.25)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(hb.cx, hb.cy, badgeRad + 6, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(16, 185, 129, 0.55)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(hb.cx, hb.cy, badgeRad + 3, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Jewel badge body
+        ctx.fillStyle = "#059669";
+        ctx.strokeStyle = "#10b981";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(hb.cx, hb.cy, badgeRad, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // 3D Specular shine arc
+        ctx.strokeStyle = "rgba(209, 250, 229, 0.85)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(hb.cx, hb.cy, badgeRad - 2, Math.PI, Math.PI * 2);
+        ctx.stroke();
+
+        // Note Label
+        const info = getNoteInfo(hb.s, hb.f);
+        const lbl = notation === 'solfejo' ? info.solfejo : info.cifra;
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 9.5px Inter, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(lbl, hb.cx, hb.cy);
+      }
+
+      // Animated Ripple Wave
+      if (ripplePos && rippleProgress > 0 && rippleProgress < 1.0) {
+        const hb = hitboxes[ripplePos];
+        if (hb) {
+          const rDist = badgeRad + 18.0 * rippleProgress;
+          const rAlpha = (1.0 - rippleProgress) * 0.7;
+          ctx.strokeStyle = `rgba(16, 185, 129, ${rAlpha})`;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(hb.cx, hb.cy, rDist, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+
+      // Incorrect Click Red Badge
+      if (lastClickedPos && lastClickCorrect === false) {
+        const hb = hitboxes[lastClickedPos];
+        if (hb) {
+          ctx.strokeStyle = "rgba(239, 68, 68, 0.4)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(hb.cx, hb.cy, badgeRad + 3, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.fillStyle = "#dc2626";
+          ctx.strokeStyle = "#b91c1c";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(hb.cx, hb.cy, badgeRad, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "bold 9.5px Inter, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(lastClickedLabel || "✗", hb.cx, hb.cy);
+        }
+      }
+    }
+
+    // --- CANVAS CLICK HANDLING ---
+    function handleCanvasPointer(x, y) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const canvasX = (x - rect.left) * scaleX;
+      const canvasY = (y - rect.top) * scaleY;
+
+      let hit = null;
+      for (const [key, hb] of Object.entries(hitboxes)) {
+        if (canvasX >= hb.x1 && canvasX <= hb.x2 && canvasY >= hb.y1 && canvasY <= hb.y2) {
+          hit = hb;
+          break;
+        }
+      }
+      if (!hit || !currentChallenge) return;
+
+      const posKey = `${hit.s},${hit.f}`;
+      const info = getNoteInfo(hit.s, hit.f);
+      const clickedLabel = notation === 'solfejo' ? info.solfejo : info.cifra;
+      const targetLabel = notation === 'solfejo' ? currentChallenge.solfejo : currentChallenge.cifra;
+      const elapsed = (performance.now() - challengeStartTime) / 1000.0;
+
+      if (validPositions.has(posKey)) {
+        if (foundPositions.has(posKey)) {
+          document.getElementById('promptTitle').innerText = `ℹ️ Você já encontrou esta posição de ${targetLabel}! Procure as outras no intervalo.`;
+          document.getElementById('promptTitle').style.color = "var(--accent)";
+          return;
+        }
+
+        // CORRECT HIT!
+        foundPositions.add(posKey);
+        totalHits++;
+        lastClickedPos = posKey;
+        lastClickCorrect = true;
+        lastClickedLabel = clickedLabel;
+
+        // Trigger Ripple Animation
+        ripplePos = posKey;
+        rippleProgress = 0.1;
+        animateRipple();
+
+        const remaining = validPositions.size - foundPositions.size;
+        const locDesc = hit.f === 0 ? "Nut (Corda Solta)" : `Casa ${hit.f}`;
+
+        if (remaining === 0) {
+          reactionTimes.push(elapsed);
+          currentStreak++;
+          if (currentStreak > bestStreak) bestStreak = currentStreak;
+
+          document.getElementById('promptTitle').innerText = `🎉 PERFEITO! Encontrou todas as ${validPositions.size} ocorrências de ${targetLabel} em ${elapsed.toFixed(2)}s!`;
+          document.getElementById('promptTitle').style.color = "var(--emerald)";
+          updateStatsUI();
+          updateChallengeUI();
+          redraw();
+
+          setTimeout(nextChallenge, 750);
+        } else {
+          document.getElementById('promptTitle').innerText = `✨ Acertou em ${locDesc}! Resta(m) ${remaining} de ${targetLabel} no intervalo.`;
+          document.getElementById('promptTitle').style.color = "var(--accent)";
+          updateStatsUI();
+          updateChallengeUI();
+          redraw();
+        }
+
+      } else {
+        // INCORRECT HIT!
+        totalErrors++;
+        currentStreak = 0;
+        lastClickedPos = posKey;
+        lastClickCorrect = false;
+        lastClickedLabel = clickedLabel;
+
+        const stringName = STRING_NAMES[hit.s];
+        const fretName = hit.f === 0 ? "Nut (Corda Solta)" : `Casa ${hit.f}`;
+        const isTarget = info.semi === currentChallenge.semi;
+
+        const msg = isTarget
+          ? `⚠️ Essa é a nota ${targetLabel}, mas está fora da região ativa! (${fretName})`
+          : `❌ Ops! Você clicou em ${clickedLabel} (${stringName}, ${fretName}). Continue procurando ${targetLabel}!`;
+
+        document.getElementById('promptTitle').innerText = msg;
+        document.getElementById('promptTitle').style.color = "var(--coral)";
+        updateStatsUI();
+        redraw();
+      }
+    }
+
+    canvas.addEventListener('click', (e) => {
+      handleCanvasPointer(e.clientX, e.clientY);
+    });
+
+    canvas.addEventListener('touchend', (e) => {
+      if (e.changedTouches.length > 0) {
+        const touch = e.changedTouches[0];
+        handleCanvasPointer(touch.clientX, touch.clientY);
+        e.preventDefault();
+      }
+    });
+
+    function animateRipple() {
+      if (rippleAnimId) cancelAnimationFrame(rippleAnimId);
+      function step() {
+        if (rippleProgress < 1.0) {
+          rippleProgress += 0.15;
+          redraw();
+          rippleAnimId = requestAnimationFrame(step);
+        } else {
+          rippleProgress = 0;
+          ripplePos = null;
+          redraw();
+        }
+      }
+      step();
+    }
+
+    // --- CONTROLS CALLBACKS ---
+    function setRegion(sf, ef, btn) {
+      startFret = sf;
+      endFret = ef;
+      document.getElementById('sliderStart').value = sf;
+      document.getElementById('sliderEnd').value = ef;
+      document.getElementById('lblStartFret').innerText = `De: ${sf}`;
+      document.getElementById('lblEndFret').innerText = `Até: ${ef}`;
+
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      nextChallenge();
+    }
+
+    function onSliderStart(val) {
+      let sf = parseInt(val);
+      if (sf >= endFret) {
+        sf = Math.max(0, endFret - 1);
+        document.getElementById('sliderStart').value = sf;
+      }
+      startFret = sf;
+      document.getElementById('lblStartFret').innerText = `De: ${sf}`;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      nextChallenge();
+    }
+
+    function onSliderEnd(val) {
+      let ef = parseInt(val);
+      if (ef <= startFret) {
+        ef = Math.min(12, startFret + 1);
+        document.getElementById('sliderEnd').value = ef;
+      }
+      endFret = ef;
+      document.getElementById('lblEndFret').innerText = `Até: ${ef}`;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      nextChallenge();
+    }
+
+    function toggleOpenStrings(checked) {
+      includeOpenStrings = checked;
+      nextChallenge();
+    }
+
+    function toggleNaturals(checked) {
+      naturalOnly = checked;
+      nextChallenge();
+    }
+
+    function toggleZoom(checked) {
+      zoomMode = checked;
+      redraw();
+    }
+
+    function toggleIntervalNotes() {
+      showIntervalNotes = !showIntervalNotes;
+      const btn = document.getElementById('btnIntervalNotes');
+      if (showIntervalNotes) {
+        btn.innerText = "👁️ Ocultar Notas do Intervalo";
+        btn.classList.add('btn-active');
+      } else {
+        btn.innerText = "👁️ Exibir Notas do Intervalo";
+        btn.classList.remove('btn-active');
+      }
+      redraw();
+    }
+
+    function setNotation(mode) {
+      notation = mode;
+      document.getElementById('btnCifra').classList.toggle('active', mode === 'cifra');
+      document.getElementById('btnSolfejo').classList.toggle('active', mode === 'solfejo');
+      updateChallengeUI();
+      redraw();
+    }
+
+    function updateStatsUI() {
+      document.getElementById('statHits').innerText = totalHits;
+      document.getElementById('statErrors').innerText = totalErrors;
+
+      const total = totalHits + totalErrors;
+      const acc = total > 0 ? ((totalHits / total) * 100).toFixed(1) + "%" : "100%";
+      document.getElementById('statAcc').innerText = acc;
+
+      if (reactionTimes.length > 0) {
+        const avg = (reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length).toFixed(2);
+        document.getElementById('statAvgTime').innerText = `${avg}s`;
+      } else {
+        document.getElementById('statAvgTime').innerText = "-- s";
+      }
+
+      document.getElementById('statBestStreak').innerText = bestStreak;
+      document.getElementById('streakVal').innerText = `🔥 Sequência: ${currentStreak}`;
+    }
+
+    function resetStats() {
+      totalHits = 0;
+      totalErrors = 0;
+      reactionTimes = [];
+      currentStreak = 0;
+      bestStreak = 0;
+      updateStatsUI();
+      document.getElementById('promptTitle').innerText = "Métricas zeradas! Pronto para recomeçar.";
+      document.getElementById('promptTitle').style.color = "var(--accent)";
+    }
+
+    // Timer tick loop
+    setInterval(() => {
+      if (challengeStartTime > 0 && foundPositions.size < validPositions.size) {
+        const cur = (performance.now() - challengeStartTime) / 1000.0;
+        document.getElementById('timerVal').innerText = `${cur.toFixed(1)}s`;
+      }
+    }, 100);
+
+    // Initial setup
+    nextChallenge();
+  </script>
+</body>
+</html>
