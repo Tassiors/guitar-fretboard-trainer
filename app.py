@@ -41,7 +41,6 @@ class GuitarTrainerApp(ctk.CTk):
         self.include_open_strings = True
         self.include_accidentals = True   # DEFAULT: Acidentes (#) e Naturais habilitados!
         self.notation = "cifra"
-        self.zoom_mode = False
         self.show_interval_notes = False
 
         # Challenge State
@@ -378,15 +377,6 @@ class GuitarTrainerApp(ctk.CTk):
         self.accidental_switch.select()  # Checked by default!
         self.accidental_switch.pack(side="left", padx=10)
 
-        # Zoom in on region
-        self.zoom_switch = ctk.CTkSwitch(
-            row2,
-            text="Zoom na Região",
-            command=self._on_zoom_toggle,
-            font=ctk.CTkFont(family="Segoe UI", size=12)
-        )
-        self.zoom_switch.pack(side="left", padx=10)
-
         # Exibir Todas as Notas do Intervalo
         self.interval_notes_btn = ctk.CTkButton(
             row2,
@@ -474,10 +464,6 @@ class GuitarTrainerApp(ctk.CTk):
     def _on_accidental_toggle(self):
         self.include_accidentals = (self.accidental_switch.get() == 1)
         self._next_challenge()
-
-    def _on_zoom_toggle(self):
-        self.zoom_mode = (self.zoom_switch.get() == 1)
-        self._redraw_fretboard()
 
     def _on_notation_change(self, val):
         self.notation = "solfejo" if "Solfejo" in val else "cifra"
@@ -616,7 +602,6 @@ class GuitarTrainerApp(ctk.CTk):
             start_fret=self.start_fret,
             end_fret=self.end_fret,
             include_open_strings=self.include_open_strings,
-            zoom_mode=self.zoom_mode,
             hand_orientation=self.hand_orientation,
             hover_pos=self.hover_pos,
             target_positions=targets,

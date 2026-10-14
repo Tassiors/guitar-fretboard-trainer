@@ -95,29 +95,10 @@ class FretboardRenderer:
 
         is_canhoto = (hand_orientation == "canhoto")
 
-        # Determine horizontal cropping and zoom range
-        if zoom_mode and (start_fret > 0 or end_fret < max_fret):
-            f_min = max(0, start_fret)
-            f_max = min(max_fret, end_fret)
-            if f_max <= f_min:
-                f_max = min(max_fret, f_min + 1)
-            
-            prev_f = max(0, f_min - 1) if f_min > 0 else 0
-            x_left_raw = (self.nut_raw_x_start - 10) if f_min == 0 else (self.raw_frets[prev_f] - 10)
-            x_right_raw = self.raw_frets[f_max] + 15
-            
-            sub_x1 = max(0, int(x_left_raw - self.orig_crop_box[0]))
-            sub_x2 = min(self.crop_w, int(x_right_raw - self.orig_crop_box[0]))
-            sub_img = self._base_cropped_image.crop((sub_x1, 0, sub_x2, self.crop_h))
-            
-            cur_crop_w = sub_x2 - sub_x1
-            cur_offset_x = x_left_raw
-            visible_frets = [f for f in range(max(0, f_min - 1), f_max + 1) if f in self.raw_frets]
-        else:
-            sub_img = self._base_cropped_image
-            cur_crop_w = self.crop_w
-            cur_offset_x = float(self.orig_crop_box[0])
-            visible_frets = list(range(0, max_fret + 1))
+        sub_img = self._base_cropped_image
+        cur_crop_w = self.crop_w
+        cur_offset_x = float(self.orig_crop_box[0])
+        visible_frets = list(range(0, max_fret + 1))
 
         target_h = int(height * 0.74)
         scale = target_h / float(self.crop_h)
@@ -209,43 +190,42 @@ class FretboardRenderer:
                     draw.text((hb[0] - 8, cy_str), tuning_labels[s_num], fill=(15, 23, 42, 240), font=font_bold, anchor="rm")
 
         # Soft wash on unselected regions
-        if not zoom_mode:
-            f_start = max(1, start_fret)
-            f_end = min(max_fret, end_fret)
+        f_start = max(1, start_fret)
+        f_end = min(max_fret, end_fret)
 
-            _, y_top_c = raw_to_canvas(self.nut_raw_x_start, self.neck_y_bounds[0])
-            _, y_bot_c = raw_to_canvas(self.nut_raw_x_start, self.neck_y_bounds[1])
-            neck_h_canvas = y_bot_c - y_top_c
+        _, y_top_c = raw_to_canvas(self.nut_raw_x_start, self.neck_y_bounds[0])
+        _, y_bot_c = raw_to_canvas(self.nut_raw_x_start, self.neck_y_bounds[1])
+        neck_h_canvas = y_bot_c - y_top_c
 
-            if not include_open_strings and start_fret > 0:
-                nx1, _ = raw_to_canvas(self.nut_raw_x_start, self.neck_y_bounds[0])
-                nx2, _ = raw_to_canvas(self.nut_raw_x_end, self.neck_y_bounds[0])
-                rx_min = min(nx1, nx2)
-                rx_max = max(nx1, nx2)
-                w_wash = rx_max - rx_min
-                if w_wash > 0:
-                    wash = Image.new("RGBA", (w_wash, neck_h_canvas), (255, 255, 255, 175))
-                    img.alpha_composite(wash, (rx_min, y_top_c))
+        if not include_open_strings and start_fret > 0:
+            nx1, _ = raw_to_canvas(self.nut_raw_x_start, self.neck_y_bounds[0])
+            nx2, _ = raw_to_canvas(self.nut_raw_x_end, self.neck_y_bounds[0])
+            rx_min = min(nx1, nx2)
+            rx_max = max(nx1, nx2)
+            w_wash = rx_max - rx_min
+            if w_wash > 0:
+                wash = Image.new("RGBA", (w_wash, neck_h_canvas), (255, 255, 255, 175))
+                img.alpha_composite(wash, (rx_min, y_top_c))
 
-            if f_start > 1:
-                x_nut_end, _ = raw_to_canvas(self.raw_frets[0], self.neck_y_bounds[0])
-                x_start_fret, _ = raw_to_canvas(self.raw_frets[f_start - 1], self.neck_y_bounds[0])
-                rx_min = min(x_nut_end, x_start_fret)
-                rx_max = max(x_nut_end, x_start_fret)
-                w_wash = rx_max - rx_min
-                if w_wash > 0:
-                    wash = Image.new("RGBA", (w_wash, neck_h_canvas), (255, 255, 255, 175))
-                    img.alpha_composite(wash, (rx_min, y_top_c))
+        if f_start > 1:
+            x_nut_end, _ = raw_to_canvas(self.raw_frets[0], self.neck_y_bounds[0])
+            x_start_fret, _ = raw_to_canvas(self.raw_frets[f_start - 1], self.neck_y_bounds[0])
+            rx_min = min(x_nut_end, x_start_fret)
+            rx_max = max(x_nut_end, x_start_fret)
+            w_wash = rx_max - rx_min
+            if w_wash > 0:
+                wash = Image.new("RGBA", (w_wash, neck_h_canvas), (255, 255, 255, 175))
+                img.alpha_composite(wash, (rx_min, y_top_c))
 
-            if f_end < max_fret:
-                x_end_fret, _ = raw_to_canvas(self.raw_frets[end_fret], self.neck_y_bounds[0])
-                x_f12, _ = raw_to_canvas(self.raw_frets[max_fret], self.neck_y_bounds[0])
-                rx_min = min(x_end_fret, x_f12)
-                rx_max = max(x_end_fret, x_f12)
-                w_wash = rx_max - rx_min
-                if w_wash > 0:
-                    wash = Image.new("RGBA", (w_wash, neck_h_canvas), (255, 255, 255, 175))
-                    img.alpha_composite(wash, (rx_min, y_top_c))
+        if f_end < max_fret:
+            x_end_fret, _ = raw_to_canvas(self.raw_frets[end_fret], self.neck_y_bounds[0])
+            x_f12, _ = raw_to_canvas(self.raw_frets[max_fret], self.neck_y_bounds[0])
+            rx_min = min(x_end_fret, x_f12)
+            rx_max = max(x_end_fret, x_f12)
+            w_wash = rx_max - rx_min
+            if w_wash > 0:
+                wash = Image.new("RGBA", (w_wash, neck_h_canvas), (255, 255, 255, 175))
+                img.alpha_composite(wash, (rx_min, y_top_c))
 
         badge_rad = max(7, int(8.5 * scale))
 
