@@ -147,3 +147,48 @@ class FretboardTheory:
             "end_fret": end_fret,
             "include_open_strings": include_open_strings
         }
+
+    @classmethod
+    def generate_guess_challenge(
+        cls,
+        start_fret: int,
+        end_fret: int,
+        natural_only: bool = True,
+        include_open_strings: bool = True,
+        previous_pos: tuple[int, int] | None = None
+    ) -> dict | None:
+        fret_range = list(range(start_fret, end_fret + 1))
+        if include_open_strings and 0 not in fret_range:
+            fret_range.append(0)
+
+        candidates = []
+        for s in range(1, 7):
+            for f in fret_range:
+                info = cls.get_note_info(s, f)
+                if not natural_only or info["is_natural"]:
+                    candidates.append((s, f, info))
+
+        if not candidates:
+            return None
+
+        choices = [c for c in candidates if (c[0], c[1]) != previous_pos]
+        if not choices:
+            choices = candidates
+
+        chosen_s, chosen_f, chosen_info = random.choice(choices)
+        return {
+            "string": chosen_s,
+            "fret": chosen_f,
+            "position": (chosen_s, chosen_f),
+            "semitone": chosen_info["semitone"],
+            "midi": chosen_info["midi"],
+            "is_natural": chosen_info["is_natural"],
+            "cifra_sharp": chosen_info["cifra_sharp"],
+            "cifra_flat": chosen_info["cifra_flat"],
+            "solfejo_sharp": chosen_info["solfejo_sharp"],
+            "solfejo_flat": chosen_info["solfejo_flat"],
+            "full_label": chosen_info["full_label"],
+            "string_name": STRING_NAMES_PT.get(chosen_s, f"{chosen_s}ª Corda"),
+            "fret_name": "Nut (Corda Solta)" if chosen_f == 0 else f"Casa {chosen_f}"
+        }
+

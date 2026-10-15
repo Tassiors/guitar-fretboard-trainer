@@ -22,34 +22,46 @@ Você pode acessar o aplicativo diretamente de qualquer computador, tablet ou ce
 
 ---
 
-## 🌟 Funcionalidades
+## 🌟 Modos de Treino
+
+1. 🎯 **Modo "Localizar no Braço"**:
+   - O aplicativo solicita uma nota musical (ex.: **Lá / A** nas casas 1 a 5).
+   - Contabiliza todas as suas ocorrências no intervalo selecionado (`🎯 0 de 3 encontradas`).
+   - Cada posição correta brilha em **verde esmeralda com onda de expansão (ripple)** e reproduz o timbre da corda.
+   - Avança para a próxima nota somente quando você encontrar **todas as ocorrências** daquele intervalo.
+
+2. 🎹 **Novo Modo "Adivinhar a Nota" (Teclado Cromático)**:
+   - O aplicativo sorteia uma posição aleatória no braço da guitarra dentro da região configurada, destacando-a com uma marcação vibrante `?`.
+   - Você adivinha a nota clicando nos botões da **escala cromática dispostos no formato de uma oitava de teclado/piano** (teclas brancas naturais embaixo e teclas pretas com acidentes em cima) para máxima ergonomia e tempo de resposta ultra-rápido.
+   - Suporte a **atalhos no teclado físico do computador** (teclas `C`, `D`, `E`, `F`, `G`, `A`, `B` e números `1` a `5`).
+   - Feedback sonoro e visual instantâneo: se errar, o app indica o erro e mantém a mesma nota; **só avança para a próxima nota quando você acertar**!
+   - Opção de alternar entre layout Teclado de Piano e Grade Rápida compacta.
+
+---
+
+## 🌟 Funcionalidades & Configurações
 
 1. **Orientação para Destros e Canhotos**:
    - **Destro (Padrão)**: Nut/pestana à esquerda, casas progredindo para a direita.
    - **Canhoto**: Orientação espelhada horizontalmente, com Nut/pestana à direita e casas progredindo para a esquerda.
    - A ordem das cordas (6ª E no topo até 1ª E embaixo) mantém a perspectiva de toque do músico em ambas as orientações.
 
-2. **Notas Naturais e Acidentes (#) por Padrão**:
+2. **Sincronização Inteligente do Nut (Cordas Soltas)**:
+   - O Nut (cordas soltas / casa 0) é **ativado automaticamente apenas quando a região começa na 1ª casa em diante** (ex.: `1ª a 5ª = ativado`, `1ª a 8ª = ativado`, `1ª a 12ª = ativado`, `0 a 12 = ativado`).
+   - Em regiões intermediárias ou agudas (ex.: `3ª a 5ª = desativado`, `5ª a 9ª = desativado`, `7ª a 12ª = desativado`), o Nut é **automaticamente desativado**, mantendo o foco do instrumentista estritamente na digitação da posição ativa.
+
+3. **Notas Naturais e Acidentes (#) por Padrão**:
    - Por padrão, o treino inclui **todas as notas (naturais e sustenidos/acidentes)** para um aprendizado musical completo.
    - Se desejar, é possível filtrar apenas notas naturais com um clique.
 
-3. **Mapeamento Completo do Nut (Cordas Soltas / Casa 0)**:
-   - Ampla área de clique para cada corda solta no Nut.
-   - Opção para incluir ou ignorar as cordas soltas no treino.
-
-4. **Treino de Todas as Ocorrências Repetidas**:
-   - Quando uma nota é solicitada (ex.: **Lá / A** nas casas 1 a 5), o aplicativo contabiliza todas as suas posições no intervalo selecionado (`🎯 0 de 3 encontradas`).
-   - Cada posição acertada brilha com uma **aura verde esmeralda e onda de expansão (ripple)** e permanece fixada.
-   - O app só avança para a próxima nota quando você encontrar **todas as ocorrências** daquele intervalo!
-
-5. **Foco por Transparência (Sem Linhas Azuis)**:
+4. **Foco por Transparência Suave**:
    - As casas e regiões fora do intervalo de prática recebem um efeito de transparência esmaecida.
    - A região ativa permanece com 100% de nitidez e contraste, direcionando o foco visual naturalmente.
 
-6. **Botão "👁️ Exibir Notas do Intervalo"**:
+5. **Botão "👁️ Exibir Notas do Intervalo"**:
    - Permite visualizar instantaneamente todas as notas musicais do intervalo ativo para estudo e memorização visual.
 
-7. **Métricas de Desempenho**:
+6. **Métricas de Desempenho em Tempo Real**:
    - ⏱️ **Tempo Médio de Resposta** (em segundos)
    - ⏱️ **Cronômetro ao vivo** da nota atual
    - ✅ **Total de Acertos**

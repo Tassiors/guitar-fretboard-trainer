@@ -81,6 +81,8 @@ class FretboardRenderer:
         ripple_pos: tuple[int, int] | None = None,
         show_interval_notes: bool = False,
         interval_notes_info: dict | None = None,
+        guess_target_pos: tuple[int, int] | None = None,
+        guess_target_label: str = "?",
         max_fret: int = 12
     ) -> tuple[Image.Image, dict[tuple[int, int], tuple[int, int, int, int]]]:
         """
@@ -241,6 +243,17 @@ class FretboardRenderer:
 
                     draw.ellipse([cx - badge_rad, cy - badge_rad, cx + badge_rad, cy + badge_rad], fill=(30, 41, 59, 230), outline=(71, 85, 105, 255), width=1)
                     draw.text((cx, cy), label, fill=(248, 250, 252, 255), font=font_badge, anchor="mm")
+
+        # Mode 2 Target Marker (Adivinhar a Nota)
+        if guess_target_pos and guess_target_pos in hitboxes:
+            if not found_positions or guess_target_pos not in found_positions:
+                bx1, by1, bx2, by2 = hitboxes[guess_target_pos]
+                cx = (bx1 + bx2) // 2
+                cy = (by1 + by2) // 2
+                draw.ellipse([cx - badge_rad - 6, cy - badge_rad - 6, cx + badge_rad + 6, cy + badge_rad + 6], outline=(56, 189, 248, 100), width=3)
+                draw.ellipse([cx - badge_rad - 2, cy - badge_rad - 2, cx + badge_rad + 2, cy + badge_rad + 2], outline=(2, 132, 199, 220), width=2)
+                draw.ellipse([cx - badge_rad, cy - badge_rad, cx + badge_rad, cy + badge_rad], fill=(2, 132, 199, 240), outline=(56, 189, 248, 255), width=2)
+                draw.text((cx, cy), guess_target_label or "?", fill=(255, 255, 255, 255), font=font_badge, anchor="mm")
 
         # Hints
         if target_positions:

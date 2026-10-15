@@ -420,6 +420,255 @@
       .hero-middle { min-width: auto; }
       .control-row { flex-direction: column; align-items: stretch; }
     }
+
+    /* CHROMATIC GUESS PANEL (MODO ADIVINHAR A NOTA) */
+    .guess-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .guess-panel-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .guess-panel-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .guess-layout-toggle {
+      display: flex;
+      background: #0f172a;
+      border-radius: 6px;
+      padding: 2px;
+      border: 1px solid var(--card-border);
+    }
+
+    .guess-layout-toggle button {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .guess-layout-toggle button.active {
+      background: var(--accent-hover);
+      color: #fff;
+    }
+
+    /* PIANO KEYBOARD VIEW */
+    .piano-keyboard-container {
+      width: 100%;
+      max-width: 520px;
+      position: relative;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .piano-octave {
+      position: relative;
+      width: 100%;
+      height: 125px;
+      background: #090d16;
+      border-radius: 8px 8px 12px 12px;
+      padding: 5px;
+      border: 1px solid #334155;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .piano-white-keys {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      gap: 3px;
+    }
+
+    .piano-white-key {
+      flex: 1;
+      height: 100%;
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      border-radius: 0 0 6px 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+      position: relative;
+      font-family: inherit;
+    }
+
+    .piano-white-key:hover {
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      transform: translateY(1px);
+    }
+
+    .piano-white-key:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .piano-black-keys {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      height: 72px;
+      pointer-events: none;
+    }
+
+    .piano-black-key {
+      position: absolute;
+      width: 10.5%;
+      height: 100%;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      color: #38bdf8;
+      border: 1px solid #475569;
+      border-radius: 0 0 5px 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 6px;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: all 0.1s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+      transform: translateX(-50%);
+      z-index: 2;
+      font-family: inherit;
+    }
+
+    .piano-black-key:hover {
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+      color: #7dd3fc;
+      transform: translateX(-50%) translateY(1px);
+    }
+
+    .piano-black-key:active {
+      transform: translateX(-50%) translateY(3px);
+    }
+
+    /* COMPACT SPEED GRID VIEW */
+    .speed-grid-container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .speed-key {
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      color: #f8fafc;
+      padding: 10px 4px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      font-family: inherit;
+      position: relative;
+    }
+
+    .speed-key:hover {
+      background: #334155;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .speed-key.is-accidental {
+      background: #0f172a;
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    .speed-key.is-accidental:hover {
+      background: #1e293b;
+    }
+
+    /* KEY FEEDBACK STATES */
+    .key-correct-feedback {
+      background: #059669 !important;
+      color: #ffffff !important;
+      border-color: #10b981 !important;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.9) !important;
+      animation: keyPulse 0.35s ease;
+    }
+
+    .key-error-feedback {
+      background: #dc2626 !important;
+      color: #ffffff !important;
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.9) !important;
+      animation: keyShake 0.3s ease;
+    }
+
+    @keyframes keyPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes keyShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-4px); }
+      40%, 80% { transform: translateX(4px); }
+    }
+
+    .key-cifra {
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .key-solf {
+      font-size: 0.65rem;
+      font-weight: 600;
+      opacity: 0.75;
+      margin-top: 2px;
+    }
+
+    .key-shortcut {
+      position: absolute;
+      top: 3px;
+      right: 4px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: #64748b;
+      opacity: 0.6;
+    }
   </style>
 </head>
 <body>
@@ -431,6 +680,12 @@
       <span id="brandSub">| Perspectiva Real de Quem Toca (E A D G B E)</span>
     </div>
     <div class="top-controls">
+      <!-- MODE TOGGLE (LOCALIZAR NO BRAÇO VS ADIVINHAR A NOTA) -->
+      <div class="segmented-btn">
+        <button id="btnModeFretboard" class="active" onclick="setMode('fretboard')">🎯 Localizar no Braço</button>
+        <button id="btnModeGuess" onclick="setMode('guess')">🎹 Adivinhar a Nota</button>
+      </div>
+
       <!-- ORIENTATION TOGGLE (DESTRO / CANHOTO) -->
       <div class="segmented-btn">
         <button id="btnDestro" class="active" onclick="setOrientation('destro')">🎸 Destro (Padrão)</button>
@@ -477,13 +732,105 @@
 
       <div class="hero-right">
         <button class="btn" id="btnReveal" onclick="revealHints()">💡 Revelar Posições</button>
-        <button class="btn btn-outline" onclick="nextChallenge()">⏭️ Pular Nota</button>
+        <button class="btn btn-outline" id="btnSkip" onclick="handleSkip()">⏭️ Pular Nota</button>
       </div>
     </div>
 
     <!-- CANVAS GUITAR (WHITE BACKGROUND) -->
     <div class="canvas-container">
       <canvas id="fretboardCanvas" width="1200" height="280"></canvas>
+    </div>
+
+    <!-- CHROMATIC GUESS PANEL (MODO ADIVINHAR A NOTA) -->
+    <div id="guessPanel" class="guess-panel" style="display: none;">
+      <div class="guess-panel-header">
+        <div class="guess-panel-title">
+          <span>🎹 Selecione a Nota Correspondente:</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">(Clique nas teclas abaixo ou use o teclado do computador)</span>
+        </div>
+        <div class="guess-layout-toggle">
+          <button id="btnLayoutPiano" class="active" onclick="setKeyboardLayout('piano')">🎹 Teclado de Piano</button>
+          <button id="btnLayoutGrid" onclick="setKeyboardLayout('grid')">⚡ Grade Rápida</button>
+        </div>
+      </div>
+
+      <!-- PIANO VIEW (OITAVA ESTILO TECLADO) -->
+      <div id="pianoContainer" class="piano-keyboard-container">
+        <div class="piano-octave">
+          <div class="piano-white-keys">
+            <!-- 7 Teclas Brancas (Naturais) -->
+            <button class="piano-white-key" data-semi="0" onclick="handleChromaticKeyClick(0)">
+              <span class="key-shortcut">C</span>
+              <span class="key-cifra">C</span>
+              <span class="key-solf">Dó</span>
+            </button>
+            <button class="piano-white-key" data-semi="2" onclick="handleChromaticKeyClick(2)">
+              <span class="key-shortcut">D</span>
+              <span class="key-cifra">D</span>
+              <span class="key-solf">Ré</span>
+            </button>
+            <button class="piano-white-key" data-semi="4" onclick="handleChromaticKeyClick(4)">
+              <span class="key-shortcut">E</span>
+              <span class="key-cifra">E</span>
+              <span class="key-solf">Mi</span>
+            </button>
+            <button class="piano-white-key" data-semi="5" onclick="handleChromaticKeyClick(5)">
+              <span class="key-shortcut">F</span>
+              <span class="key-cifra">F</span>
+              <span class="key-solf">Fá</span>
+            </button>
+            <button class="piano-white-key" data-semi="7" onclick="handleChromaticKeyClick(7)">
+              <span class="key-shortcut">G</span>
+              <span class="key-cifra">G</span>
+              <span class="key-solf">Sol</span>
+            </button>
+            <button class="piano-white-key" data-semi="9" onclick="handleChromaticKeyClick(9)">
+              <span class="key-shortcut">A</span>
+              <span class="key-cifra">A</span>
+              <span class="key-solf">Lá</span>
+            </button>
+            <button class="piano-white-key" data-semi="11" onclick="handleChromaticKeyClick(11)">
+              <span class="key-shortcut">B</span>
+              <span class="key-cifra">B</span>
+              <span class="key-solf">Si</span>
+            </button>
+          </div>
+
+          <div class="piano-black-keys">
+            <!-- 5 Teclas Pretas (Acidentes #) intercaladas na divisória exata -->
+            <button class="piano-black-key" style="left: calc(100% * 1 / 7);" data-semi="1" onclick="handleChromaticKeyClick(1)">
+              <span class="key-shortcut">1</span>
+              <span class="key-cifra">C#</span>
+              <span class="key-solf">Dó#</span>
+            </button>
+            <button class="piano-black-key" style="left: calc(100% * 2 / 7);" data-semi="3" onclick="handleChromaticKeyClick(3)">
+              <span class="key-shortcut">2</span>
+              <span class="key-cifra">D#</span>
+              <span class="key-solf">Ré#</span>
+            </button>
+            <button class="piano-black-key" style="left: calc(100% * 4 / 7);" data-semi="6" onclick="handleChromaticKeyClick(6)">
+              <span class="key-shortcut">3</span>
+              <span class="key-cifra">F#</span>
+              <span class="key-solf">Fá#</span>
+            </button>
+            <button class="piano-black-key" style="left: calc(100% * 5 / 7);" data-semi="8" onclick="handleChromaticKeyClick(8)">
+              <span class="key-shortcut">4</span>
+              <span class="key-cifra">G#</span>
+              <span class="key-solf">Sol#</span>
+            </button>
+            <button class="piano-black-key" style="left: calc(100% * 6 / 7);" data-semi="10" onclick="handleChromaticKeyClick(10)">
+              <span class="key-shortcut">5</span>
+              <span class="key-cifra">A#</span>
+              <span class="key-solf">Lá#</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPEED GRID VIEW (ULTRA-RÁPIDO) -->
+      <div id="gridContainer" class="speed-grid-container" style="display: none;">
+        <!-- Inserido dinamicamente via JS -->
+      </div>
     </div>
 
     <!-- STATS ROW -->
@@ -596,16 +943,24 @@
 
     // --- APPLICATION STATE ---
     let handOrientation = 'destro'; // 'destro' (default) or 'canhoto'
+    let trainerMode = 'fretboard';   // 'fretboard' (Modo 1) or 'guess' (Modo 2)
+    let keyboardLayout = 'piano';    // 'piano' or 'grid'
     let startFret = 1;
     let endFret = 5;
     let includeOpenStrings = true;
-    let includeAccidentals = true; // DEFAULT: Naturais e Acidentes (#) habilitados!
+    let includeAccidentals = true;   // DEFAULT: Naturais e Acidentes (#) habilitados!
     let notation = 'cifra';
     let showIntervalNotes = false;
 
+    // Challenge State for Mode 1 (Localizar no Braço)
     let currentChallenge = null;
     let validPositions = new Set();
     let foundPositions = new Set();
+
+    // Challenge State for Mode 2 (Adivinhar a Nota)
+    let currentGuessTarget = null;
+    let guessResolved = false;
+
     let challengeStartTime = 0;
     let targetRevealed = false;
 
@@ -624,12 +979,55 @@
 
     let hitboxes = {};
 
+    // Web Audio Synthesizer for rich guitar pluck feedback
+    let audioCtx = null;
+    function playGuitarTone(midi) {
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const freq = 440 * Math.pow(2, (midi - 69) / 12);
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.exponentialRampToValueAtTime(0.28, now + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.85);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.9);
+      } catch (e) {
+        // Audio policy or unsupported
+      }
+    }
+
     // Load Guitar Neck Image
     const canvas = document.getElementById('fretboardCanvas');
     const ctx = canvas.getContext('2d');
     const neckImage = new Image();
     neckImage.src = 'assets/guitar_neck_white_bg.jpg';
     neckImage.onload = () => { redraw(); };
+
+    // --- NUT AUTO-SYNC RULE ---
+    // Nut / Cordas Soltas: ativado apenas quando a região corresponde da 1ª em diante (1 a 5, 1 a 8, 1 a 12 = ativado; 3 a 5 = desativado)
+    function syncNutWithRegion() {
+      const shouldEnable = (startFret <= 1);
+      includeOpenStrings = shouldEnable;
+      const chk = document.getElementById('chkOpenStrings');
+      if (chk) {
+        chk.checked = shouldEnable;
+      }
+    }
 
     // --- MUSIC LOGIC ---
     function getNoteInfo(s, f) {
@@ -643,6 +1041,7 @@
       };
     }
 
+    // --- MODE 1: LOCALIZAR NO BRAÇO ---
     function generateChallenge() {
       const fretList = [];
       for (let f = startFret; f <= endFret; f++) fretList.push(f);
@@ -686,6 +1085,7 @@
 
     function nextChallenge() {
       currentChallenge = generateChallenge();
+      if (!currentChallenge) return;
       validPositions = new Set(currentChallenge.positions);
       foundPositions = new Set();
       challengeStartTime = performance.now();
@@ -703,6 +1103,10 @@
     }
 
     function updateChallengeUI() {
+      if (trainerMode === 'guess') {
+        updateGuessUI();
+        return;
+      }
       if (!currentChallenge) return;
       const isSolf = notation === 'solfejo';
       const mainTxt = isSolf ? currentChallenge.solfejo : currentChallenge.cifra;
@@ -726,16 +1130,248 @@
 
       const orientTxt = (handOrientation === 'canhoto') ? " [Orientação Canhoto]" : "";
       const instr = totalNeeded > 1
-        ? `Existem ${totalNeeded} ocorrências de ${mainTxt} em ${regDesc}${orientTxt}. Clique em todas para avançar!`
-        : `Existe 1 ocorrência de ${mainTxt} em ${regDesc}${orientTxt}. Clique nela para avançar!`;
+        ? `Existem ${totalNeeded} ocorrências de ${mainTxt} em ${regDesc}${orientTxt}. Clique em todas no braço para avançar!`
+        : `Existe 1 ocorrência de ${mainTxt} em ${regDesc}${orientTxt}. Clique nela no braço para avançar!`;
       document.getElementById('instructionText').innerText = instr;
     }
 
-    function revealHints() {
-      targetRevealed = true;
-      document.getElementById('promptTitle').innerText = "DICA: POSIÇÕES DESTACADAS NO BRAÇO:";
-      document.getElementById('promptTitle').style.color = "var(--amber)";
+    // --- MODE 2: ADIVINHAR A NOTA (ESCALA CROMÁTICA) ---
+    function generateGuessChallenge() {
+      const fretList = [];
+      for (let f = startFret; f <= endFret; f++) fretList.push(f);
+      if (includeOpenStrings && !fretList.includes(0)) fretList.push(0);
+
+      const available = [];
+      for (let s = 1; s <= 6; s++) {
+        for (const f of fretList) {
+          const info = getNoteInfo(s, f);
+          if (includeAccidentals || info.isNatural) {
+            available.push(info);
+          }
+        }
+      }
+
+      if (available.length === 0) return null;
+
+      let choices = available;
+      if (currentGuessTarget && available.length > 1) {
+        choices = available.filter(i => `${i.string},${i.fret}` !== `${currentGuessTarget.string},${currentGuessTarget.fret}`);
+      }
+      const chosen = choices[Math.floor(Math.random() * choices.length)];
+      return chosen;
+    }
+
+    function nextGuessChallenge() {
+      currentGuessTarget = generateGuessChallenge();
+      if (!currentGuessTarget) return;
+
+      guessResolved = false;
+      validPositions = new Set([`${currentGuessTarget.string},${currentGuessTarget.fret}`]);
+      foundPositions = new Set();
+      challengeStartTime = performance.now();
+      targetRevealed = false;
+      lastClickedPos = null;
+      lastClickCorrect = null;
+      lastClickedLabel = '';
+      ripplePos = null;
+      rippleProgress = 0;
+
+      document.getElementById('promptTitle').innerText = "QUAL É A NOTA MARCADA NO BRAÇO?";
+      document.getElementById('promptTitle').style.color = "var(--text-muted)";
+      updateGuessUI();
       redraw();
+    }
+
+    function updateGuessUI() {
+      if (!currentGuessTarget) return;
+      const isSolf = notation === 'solfejo';
+      const targetLabel = isSolf ? currentGuessTarget.solfejo : currentGuessTarget.cifra;
+
+      document.getElementById('targetNote').innerText = "?";
+
+      const fretStr = currentGuessTarget.fret === 0 ? "Nut (Corda Solta)" : `Casa ${currentGuessTarget.fret}`;
+      const strName = STRING_NAMES[currentGuessTarget.string];
+      document.getElementById('targetSubnote').innerText = `(${strName} • ${fretStr})`;
+
+      const badge = document.getElementById('progressBadge');
+      badge.innerText = "Toque na nota abaixo";
+      badge.classList.remove('completed');
+
+      document.getElementById('instructionText').innerText =
+        `Identifique a nota na ${strName}, ${fretStr}. Escolha a nota correta no teclado cromático para avançar!`;
+    }
+
+    function handleChromaticKeyClick(semi) {
+      if (trainerMode !== 'guess' || !currentGuessTarget || guessResolved) return;
+
+      const isSolf = notation === 'solfejo';
+      const selectedLabel = isSolf ? SHARP_SOLF[semi] : SHARP_CIFRA[semi];
+      const targetLabel = isSolf ? currentGuessTarget.solfejo : currentGuessTarget.cifra;
+      const posKey = `${currentGuessTarget.string},${currentGuessTarget.fret}`;
+      const elapsed = (performance.now() - challengeStartTime) / 1000.0;
+
+      const keyEls = document.querySelectorAll(`[data-semi="${semi}"]`);
+
+      if (semi === currentGuessTarget.semi) {
+        // === RESPOSTA CORRETA ===
+        guessResolved = true;
+        totalHits++;
+        currentStreak++;
+        if (currentStreak > bestStreak) bestStreak = currentStreak;
+        reactionTimes.push(elapsed);
+
+        foundPositions.add(posKey);
+        lastClickedPos = posKey;
+        lastClickCorrect = true;
+        lastClickedLabel = targetLabel;
+
+        ripplePos = posKey;
+        rippleProgress = 0.1;
+        animateRipple();
+
+        // Animação de sucesso nas teclas
+        keyEls.forEach(el => {
+          el.classList.add('key-correct-feedback');
+          setTimeout(() => el.classList.remove('key-correct-feedback'), 500);
+        });
+
+        // Som de violão/guitarra sintetizado
+        playGuitarTone(currentGuessTarget.midi);
+
+        document.getElementById('targetNote').innerText = targetLabel;
+        const badge = document.getElementById('progressBadge');
+        badge.innerText = "✅ Acertou!";
+        badge.classList.add('completed');
+
+        document.getElementById('promptTitle').innerText =
+          `🎉 CORRETO! A nota é ${targetLabel} (${isSolf ? currentGuessTarget.cifra : currentGuessTarget.solfejo}) em ${elapsed.toFixed(2)}s!`;
+        document.getElementById('promptTitle').style.color = "var(--emerald)";
+
+        updateStatsUI();
+        redraw();
+
+        // O usuário solicitou: só vá para a próxima nota quando acertar!
+        setTimeout(nextGuessChallenge, 700);
+
+      } else {
+        // === RESPOSTA INCORRETA ===
+        totalErrors++;
+        currentStreak = 0;
+
+        keyEls.forEach(el => {
+          el.classList.add('key-error-feedback');
+          setTimeout(() => el.classList.remove('key-error-feedback'), 400);
+        });
+
+        document.getElementById('promptTitle').innerText =
+          `❌ Ops! Não é ${selectedLabel}. Tente novamente!`;
+        document.getElementById('promptTitle').style.color = "var(--coral)";
+
+        updateStatsUI();
+        // Permanece na mesma nota até acertar!
+      }
+    }
+
+    function setMode(mode) {
+      trainerMode = mode;
+      document.getElementById('btnModeFretboard').classList.toggle('active', mode === 'fretboard');
+      document.getElementById('btnModeGuess').classList.toggle('active', mode === 'guess');
+
+      const guessPanel = document.getElementById('guessPanel');
+      if (mode === 'guess') {
+        guessPanel.style.display = 'flex';
+        document.getElementById('btnReveal').innerText = "💡 Revelar Nota";
+        renderSpeedGrid();
+        nextGuessChallenge();
+      } else {
+        guessPanel.style.display = 'none';
+        document.getElementById('btnReveal').innerText = "💡 Revelar Posições";
+        nextChallenge();
+      }
+    }
+
+    function setKeyboardLayout(layout) {
+      keyboardLayout = layout;
+      document.getElementById('btnLayoutPiano').classList.toggle('active', layout === 'piano');
+      document.getElementById('btnLayoutGrid').classList.toggle('active', layout === 'grid');
+
+      document.getElementById('pianoContainer').style.display = (layout === 'piano') ? 'flex' : 'none';
+      document.getElementById('gridContainer').style.display = (layout === 'grid') ? 'grid' : 'none';
+      if (layout === 'grid') renderSpeedGrid();
+    }
+
+    function renderSpeedGrid() {
+      const container = document.getElementById('gridContainer');
+      if (!container) return;
+      container.innerHTML = '';
+      const isSolf = notation === 'solfejo';
+
+      // 12 chromatic notes in order: C, C#, D, D#, E, F, F#, G, G#, A, A#, B
+      const shortcuts = ["C", "1", "D", "2", "E", "F", "3", "G", "4", "A", "5", "B"];
+      for (let semi = 0; semi < 12; semi++) {
+        const isAcc = !NATURALS.has(semi);
+        const cifra = SHARP_CIFRA[semi];
+        const solf = SHARP_SOLF[semi];
+        const mainTxt = isSolf ? solf : cifra;
+        const subTxt = isSolf ? cifra : solf;
+
+        const btn = document.createElement('button');
+        btn.className = `speed-key ${isAcc ? 'is-accidental' : ''}`;
+        btn.setAttribute('data-semi', semi);
+        btn.onclick = () => handleChromaticKeyClick(semi);
+
+        btn.innerHTML = `
+          <span class="key-shortcut">${shortcuts[semi]}</span>
+          <span class="key-cifra">${mainTxt}</span>
+          <span class="key-solf">${subTxt}</span>
+        `;
+        container.appendChild(btn);
+      }
+    }
+
+    function updatePianoKeysLabels() {
+      const isSolf = notation === 'solfejo';
+      document.querySelectorAll('.piano-white-key, .piano-black-key').forEach(btn => {
+        const semi = parseInt(btn.getAttribute('data-semi'));
+        const cifraEl = btn.querySelector('.key-cifra');
+        const solfEl = btn.querySelector('.key-solf');
+        if (cifraEl && solfEl) {
+          if (isSolf) {
+            cifraEl.innerText = SHARP_SOLF[semi];
+            solfEl.innerText = SHARP_CIFRA[semi];
+          } else {
+            cifraEl.innerText = SHARP_CIFRA[semi];
+            solfEl.innerText = SHARP_SOLF[semi];
+          }
+        }
+      });
+      if (keyboardLayout === 'grid') renderSpeedGrid();
+    }
+
+    function handleSkip() {
+      if (trainerMode === 'guess') {
+        nextGuessChallenge();
+      } else {
+        nextChallenge();
+      }
+    }
+
+    function revealHints() {
+      if (trainerMode === 'guess') {
+        if (!currentGuessTarget) return;
+        targetRevealed = true;
+        const isSolf = notation === 'solfejo';
+        const targetLabel = isSolf ? currentGuessTarget.solfejo : currentGuessTarget.cifra;
+        document.getElementById('promptTitle').innerText =
+          `DICA: Esta nota é ${targetLabel} (${isSolf ? currentGuessTarget.cifra : currentGuessTarget.solfejo})!`;
+        document.getElementById('promptTitle').style.color = "var(--amber)";
+        redraw();
+      } else {
+        targetRevealed = true;
+        document.getElementById('promptTitle').innerText = "DICA: POSIÇÕES DESTACADAS NO BRAÇO:";
+        document.getElementById('promptTitle').style.color = "var(--amber)";
+        redraw();
+      }
     }
 
     // --- CANVAS RENDERING (DESTRO & CANHOTO / LEFT-HANDED COMPATIBLE) ---
@@ -806,12 +1442,11 @@
         const p1 = rawToCanvas(rx1, NECK_Y_BOUNDS[0]);
         const p2 = rawToCanvas(rx2, NECK_Y_BOUNDS[1]);
 
-        // In canhoto, p2.x is to the left of p1.x because coordinates are mirrored
         const boxX1 = Math.min(p1.x, p2.x);
         const boxX2 = Math.max(p1.x, p2.x);
         const cmidX = Math.floor((boxX1 + boxX2) / 2);
 
-        // Fret number label (dark contrast, no blue lines)
+        // Fret number label (dark contrast)
         if (f > 0) {
           const isActive = (f >= startFret && f <= endFret);
           ctx.fillStyle = isActive ? "#0f172a" : "#94a3b8";
@@ -835,7 +1470,7 @@
         }
       }
 
-      // Nut labels (clean typography)
+      // Nut labels
       if (visibleFrets.includes(0)) {
         const nutP1 = rawToCanvas(NUT_RAW_X.start, NECK_Y_BOUNDS[0]);
         const nutP2 = rawToCanvas(NUT_RAW_X.end, NECK_Y_BOUNDS[1]);
@@ -850,7 +1485,7 @@
         ctx.fillText("Soltas", nutMidX, nutP1.y - 10);
       }
 
-      // Tuning labels: Near the Nut (Left for Destro, Right for Canhoto)
+      // Tuning labels near the Nut
       ctx.textAlign = isCanhoto ? "left" : "right";
       ctx.textBaseline = "middle";
       ctx.font = "bold 11px Inter, sans-serif";
@@ -863,7 +1498,7 @@
         }
       }
 
-      // === TRANSPARENCY WASH FOR UNSELECTED REGIONS ONLY (ZERO BLUE LINES) ===
+      // === TRANSPARENCY WASH FOR UNSELECTED REGIONS ===
       const yTopC = rawToCanvas(NUT_RAW_X.start, NECK_Y_BOUNDS[0]).y;
       const yBotC = rawToCanvas(NUT_RAW_X.start, NECK_Y_BOUNDS[1]).y;
       const neckH = yBotC - yTopC;
@@ -935,8 +1570,43 @@
         }
       }
 
-      // Target position hint stars
-      if (targetRevealed && currentChallenge) {
+      // === TARGET MARKER FOR MODE 2: ADIVINHAR A NOTA ===
+      if (trainerMode === 'guess' && currentGuessTarget) {
+        const posKey = `${currentGuessTarget.string},${currentGuessTarget.fret}`;
+        if (!foundPositions.has(posKey)) {
+          const hb = hitboxes[posKey];
+          if (hb) {
+            // Glowing outer pulse ring
+            ctx.strokeStyle = "rgba(56, 189, 248, 0.4)";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(hb.cx, hb.cy, badgeRad + 6, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.strokeStyle = targetRevealed ? "#f59e0b" : "#38bdf8";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(hb.cx, hb.cy, badgeRad + 2, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.fillStyle = targetRevealed ? "#f59e0b" : "#0284c7";
+            ctx.beginPath();
+            ctx.arc(hb.cx, hb.cy, badgeRad, 0, Math.PI * 2);
+            ctx.fill();
+
+            const isSolf = notation === 'solfejo';
+            const markLabel = targetRevealed ? (isSolf ? currentGuessTarget.solfejo : currentGuessTarget.cifra) : "?";
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 10px Inter, sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(markLabel, hb.cx, hb.cy);
+          }
+        }
+      }
+
+      // Target position hint stars (Modo 1)
+      if (trainerMode === 'fretboard' && targetRevealed && currentChallenge) {
         for (const posKey of validPositions) {
           const hb = hitboxes[posKey];
           if (!hb || foundPositions.has(posKey)) continue;
@@ -1017,7 +1687,7 @@
         }
       }
 
-      // Incorrect Click Red Badge
+      // Incorrect Click Red Badge (Modo 1)
       if (lastClickedPos && lastClickCorrect === false) {
         const hb = hitboxes[lastClickedPos];
         if (hb) {
@@ -1059,7 +1729,24 @@
           break;
         }
       }
-      if (!hit || !currentChallenge) return;
+      if (!hit) return;
+
+      // Se estiver no Modo 2 (Adivinhar a Nota):
+      if (trainerMode === 'guess') {
+        if (currentGuessTarget && hit.s === currentGuessTarget.string && hit.f === currentGuessTarget.fret) {
+          playGuitarTone(currentGuessTarget.midi);
+        } else {
+          const info = getNoteInfo(hit.s, hit.f);
+          playGuitarTone(info.midi);
+        }
+        document.getElementById('promptTitle').innerText =
+          "🎹 No modo de Adivinhação, clique na tecla da nota no teclado cromático abaixo!";
+        document.getElementById('promptTitle').style.color = "var(--accent)";
+        return;
+      }
+
+      // Modo 1 (Localizar no Braço):
+      if (!currentChallenge) return;
 
       const posKey = `${hit.s},${hit.f}`;
       const info = getNoteInfo(hit.s, hit.f);
@@ -1084,6 +1771,8 @@
         ripplePos = posKey;
         rippleProgress = 0.1;
         animateRipple();
+
+        playGuitarTone(info.midi);
 
         const remaining = validPositions.size - foundPositions.size;
         const locDesc = hit.f === 0 ? "Nut (Corda Solta)" : `Casa ${hit.f}`;
@@ -1122,7 +1811,7 @@
 
         const msg = isTarget
           ? `⚠️ Essa é a nota ${targetLabel}, mas está fora da região ativa! (${fretName})`
-          : `❌ Ops! Você clicou em ${clickedLabel} (${stringName}, {fretName}). Continue procurando ${targetLabel}!`;
+          : `❌ Ops! Você clicou em ${clickedLabel} (${stringName}, ${fretName}). Continue procurando ${targetLabel}!`;
 
         document.getElementById('promptTitle').innerText = msg;
         document.getElementById('promptTitle').style.color = "var(--coral)";
@@ -1140,6 +1829,27 @@
         const touch = e.changedTouches[0];
         handleCanvasPointer(touch.clientX, touch.clientY);
         e.preventDefault();
+      }
+    });
+
+    // Keyboard Shortcuts for Mode 2 (Adivinhar a Nota)
+    window.addEventListener('keydown', (e) => {
+      if (trainerMode !== 'guess' || guessResolved) return;
+      const key = e.key.toUpperCase();
+
+      const naturalMap = { 'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11 };
+      const numberMap = { '1': 1, '2': 3, '3': 6, '4': 8, '5': 10 };
+
+      if (e.shiftKey && naturalMap[key] !== undefined) {
+        const base = naturalMap[key];
+        const sharpMap = { 0: 1, 2: 3, 5: 6, 7: 8, 9: 10 };
+        if (sharpMap[base] !== undefined) {
+          handleChromaticKeyClick(sharpMap[base]);
+        }
+      } else if (naturalMap[key] !== undefined) {
+        handleChromaticKeyClick(naturalMap[key]);
+      } else if (numberMap[e.key] !== undefined) {
+        handleChromaticKeyClick(numberMap[e.key]);
       }
     });
 
@@ -1168,7 +1878,7 @@
         ? "| Perspectiva Real de Quem Toca (Canhoto • E A D G B E)"
         : "| Perspectiva Real de Quem Toca (Destro • E A D G B E)";
       document.getElementById('brandSub').innerText = subTxt;
-      updateChallengeUI();
+      if (trainerMode === 'guess') updateGuessUI(); else updateChallengeUI();
       redraw();
     }
 
@@ -1183,7 +1893,14 @@
       document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
 
-      nextChallenge();
+      // Nut / Cordas Soltas: ativado apenas quando a região corresponde da 1ª em diante
+      syncNutWithRegion();
+
+      if (trainerMode === 'guess') {
+        nextGuessChallenge();
+      } else {
+        nextChallenge();
+      }
     }
 
     function onSliderStart(val) {
@@ -1195,7 +1912,15 @@
       startFret = sf;
       document.getElementById('lblStartFret').innerText = `De: ${sf}`;
       document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-      nextChallenge();
+
+      // Nut / Cordas Soltas: ativado apenas quando a região corresponde da 1ª em diante
+      syncNutWithRegion();
+
+      if (trainerMode === 'guess') {
+        nextGuessChallenge();
+      } else {
+        nextChallenge();
+      }
     }
 
     function onSliderEnd(val) {
@@ -1207,17 +1932,30 @@
       endFret = ef;
       document.getElementById('lblEndFret').innerText = `Até: ${ef}`;
       document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-      nextChallenge();
+
+      if (trainerMode === 'guess') {
+        nextGuessChallenge();
+      } else {
+        nextChallenge();
+      }
     }
 
     function toggleOpenStrings(checked) {
       includeOpenStrings = checked;
-      nextChallenge();
+      if (trainerMode === 'guess') {
+        nextGuessChallenge();
+      } else {
+        nextChallenge();
+      }
     }
 
     function toggleAccidentals(checked) {
       includeAccidentals = checked;
-      nextChallenge();
+      if (trainerMode === 'guess') {
+        nextGuessChallenge();
+      } else {
+        nextChallenge();
+      }
     }
 
     function toggleIntervalNotes() {
@@ -1237,7 +1975,8 @@
       notation = mode;
       document.getElementById('btnCifra').classList.toggle('active', mode === 'cifra');
       document.getElementById('btnSolfejo').classList.toggle('active', mode === 'solfejo');
-      updateChallengeUI();
+      updatePianoKeysLabels();
+      if (trainerMode === 'guess') updateGuessUI(); else updateChallengeUI();
       redraw();
     }
 
@@ -1272,12 +2011,17 @@
     }
 
     setInterval(() => {
-      if (challengeStartTime > 0 && foundPositions.size < validPositions.size) {
-        const cur = (performance.now() - challengeStartTime) / 1000.0;
-        document.getElementById('timerVal').innerText = `${cur.toFixed(1)}s`;
+      if (challengeStartTime > 0) {
+        const isCompleted = (trainerMode === 'guess') ? guessResolved : (foundPositions.size >= validPositions.size);
+        if (!isCompleted) {
+          const cur = (performance.now() - challengeStartTime) / 1000.0;
+          document.getElementById('timerVal').innerText = `${cur.toFixed(1)}s`;
+        }
       }
     }, 100);
 
+    // Initial setup: enforce Nut sync rule for initial region
+    syncNutWithRegion();
     nextChallenge();
   </script>
 </body>
